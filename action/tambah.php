@@ -1,9 +1,9 @@
 <?php 
 include('../koneksi.php');
 
-// user
+// USER
 if ($_POST['personil'] == NULL){
-  header('Location: ../data.php');
+  header('Location: ../user.php');
 }else{
 if (isset($_POST['submit'])) {
   $personil = $_POST['personil'];
@@ -16,9 +16,9 @@ if (isset($_POST['submit'])) {
   $result = mysqli_query($conn, $query);
 
   if ($result) {
-    header('Location: ../data.php');
+    header('Location: ../user.php');
   } else {
-    header('Location: ../data.php');
+    header('Location: ../user.php');
   }
 }
 
@@ -36,7 +36,7 @@ if (isset($_POST['submitPersonil'])) {
 
   if ($result) {
     $_SESSION['success'] = "Data personil berhasil ditambahkan.";
-    header('Location: ../index.php?pages=personil');
+    header('Location: ../personil.php');
   } else {
     $_SESSION['error'] = "Data personil gagal ditambahkan.";
   }

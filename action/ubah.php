@@ -1,6 +1,6 @@
 <?php 
     include('../koneksi.php');
-
+// USER
 if (isset($_POST['submit'])) {
   $id_user = $_POST['id_user'];
   $username = $_POST['username'];
@@ -12,9 +12,16 @@ if (isset($_POST['submit'])) {
   $result = mysqli_query($conn, $query);
   
   if ($result) {
-    header('Location: ../data.php');
+    header('Location: ../user.php');
   } else {
-    header('Location: ../data.php');
+    header('Location: ../user.php');
   }
 }
+
+
+
+
+
+
+
  ?>
