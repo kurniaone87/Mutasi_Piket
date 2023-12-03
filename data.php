@@ -232,12 +232,28 @@
 
                         <div class="form-group">
                           <label>Role</label>
-                          <input type="text" name="level" class="form-control" value="<?php echo $row['level']; ?>">      
+                          <?php 
+                            if ($row['status_user']=='1'){
+                              echo "<select name=\"level\" class=\"form-control\">
+                                      <option value=\"admin\">admin</option>
+                                      <option value=\"petugas\">petugas</option>      
+                              </select>";
+                            }else{
+                              echo "<input type=\"text\" name=\"level\" class=\"form-control\" value=".$row['level']." disabled>";
+                            } ?>      
                         </div>
 
                         <div class="form-group">
                           <label>Status</label>
-                          <input type="text" name="status" class="form-control" value="<?php echo $row['status_user']; ?>">      
+                          <?php 
+                            if ($row['status_user']=='1'){
+                              echo "<select name=\"status\" class=\"form-control\">
+                                      <option value=\"1\">Aktif</option>
+                                      <option value=\"0\">Tidak Aktif</option>      
+                              </select>";
+                            }else{
+                              echo "<input type=\"text\" name=\"status\" class=\"form-control\" value=\"Tidak Aktif\" disabled>";
+                            } ?>     
                         </div>
                         
                         <div class="modal-footer">  
@@ -287,7 +303,7 @@
                           <select name="personil" id="personil" class="form-control">
                               <option disabled selected> Pilih Personil </option>
                               <?php 
-                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user) and status_personil <> '0'");
+                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user WHERE status_user='1') and status_personil <> '0'");
                                 while ($data=mysqli_fetch_array($sql)) {
                               ?>
                                 <option value="<?=$data['id_personil']?>"><?=$data['nama_personil']?></option> 
