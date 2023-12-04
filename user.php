@@ -1,5 +1,14 @@
 <?php
+     session_start();
     include "koneksi.php";
+    
+      if($_SESSION['status']!="login"){
+        header("location: index.php");
+      }
+
+
+      $level = $_SESSION['level'];
+
 ?>
 
 <!DOCTYPE html>
@@ -53,15 +62,20 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">
+            <a href="dashboard.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+
+
+          <?php
+          if ($level == "admin") {
+            ?>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Data Master
@@ -70,7 +84,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="user.php" class="nav-link active">
+                <a href="user.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data User</p>
                 </a>
@@ -89,6 +103,7 @@
               </li>
             </ul>
           </li>
+           
           <li class="nav-header">TRANSAKSI</li>
           <li class="nav-item">
             <a href="trx_mutasijaga.php" class="nav-link">
@@ -99,12 +114,37 @@
               </p>
             </a>
           </li>
+            
+          <?php
+            } else {
+              ?>
+               <li class="nav-header">TRANSAKSI</li>
+          <li class="nav-item">
+            <a href="trx_mutasijaga.php" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Mutasi Piket
+              </p>
+            </a>
+          </li>
+              <?php 
+            }
+
+            ?>  
 
           <li class="nav-header">LAPORAN</li>
           <li class="nav-item">
             <a href="https://adminlte.io/docs/3.0" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Documentation</p>
+            </a>
+          </li>
+
+          <li class="nav-header">KELUAR</li>
+          <li class="nav-item">
+            <a href="./action/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
             </a>
           </li>
         </ul>

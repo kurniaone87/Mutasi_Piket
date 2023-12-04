@@ -1,6 +1,15 @@
 <?php
+    session_start();
     include "koneksi.php";
+    
+      if($_SESSION['status']!="login"){
+        header("location: index.php");
+      }
+
+
+      $level = $_SESSION['level'];
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -60,6 +69,11 @@
               </p>
             </a>
           </li>
+
+
+          <?php
+          if ($level == "admin") {
+            ?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
@@ -89,6 +103,7 @@
               </li>
             </ul>
           </li>
+           
           <li class="nav-header">TRANSAKSI</li>
           <li class="nav-item">
             <a href="trx_mutasijaga.php" class="nav-link">
@@ -98,12 +113,37 @@
               </p>
             </a>
           </li>
+            
+          <?php
+            } else {
+              ?>
+               <li class="nav-header">TRANSAKSI</li>
+          <li class="nav-item">
+            <a href="trx_mutasijaga.php" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Mutasi Piket
+              </p>
+            </a>
+          </li>
+              <?php 
+            }
+
+            ?>  
 
           <li class="nav-header">LAPORAN</li>
           <li class="nav-item">
             <a href="https://adminlte.io/docs/3.0" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Documentation</p>
+            </a>
+          </li>
+
+          <li class="nav-header">KELUAR</li>
+          <li class="nav-item">
+            <a href="./action/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
             </a>
           </li>
         </ul>
@@ -121,6 +161,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Dashboard</h1>
+            <!-- <h5 class="mt-3">hello <?php echo $level;?></h5> -->
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
