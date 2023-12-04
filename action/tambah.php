@@ -44,27 +44,32 @@ function createPersonil($conn) {
   }
 }
 
+// barang
+function createBarang($conn) {
+  if (isset($_POST['submit'])) {
+    $namabarang = $_POST['namabarang'];
+    $jmlbarang = $_POST['jmlbarang'];
+
+    $querybarang = "INSERT INTO tb_barang (nama_barang, jml_barang, status_brg) VALUES ('$namabarang','$jmlbarang', '1')";
+    $result = mysqli_query($conn, $querybarang);
+
+    if ($result) {
+      $_SESSION['success'] = "Data barang berhasil ditambahkan.";
+      header('Location: ../barang.php');
+    } else {
+      $_SESSION['error'] = "Data personil gagal ditambahkan.";
+    }
+  }
+}
 
 if ($_POST['action'] == 'createPersonil') {
   createPersonil($conn);
 } elseif ($_POST['action'] == 'createUser') {
   createUser($conn);
+} elseif ($_POST['action'] == 'createBarang') {
+  createBarang($conn);
 }
 
-// barang
-if (isset($_POST['submitbarang'])) {
-  $namabarang = $_POST['namabarang'];
-  $jmlbarang = $_POST['jmlbarang'];
 
-  $querybarang = "INSERT INTO tb_barang (nama_barang, jml_barang, status_brg) VALUES ('$namabarang','$jmlbarang', '1')";
-  $result = mysqli_query($conn, $querybarang);
-
-  if ($result) {
-    $_SESSION['success'] = "Data barang berhasil ditambahkan.";
-    header('Location: ../barang.php');
-  } else {
-    $_SESSION['error'] = "Data personil gagal ditambahkan.";
-  }
-}
 
  ?>

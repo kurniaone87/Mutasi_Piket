@@ -290,6 +290,7 @@
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createBarang">
 
                         <div class="form-group">   
                           <label>Nama Barang</label>
@@ -300,7 +301,7 @@
                         </div>
                         
                         <div class="modal-footer">  
-                          <button type="submit" name="submitbarang" class="btn btn-success">Simpan Data</button>
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         </div>       
                       </form>
