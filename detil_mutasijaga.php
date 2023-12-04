@@ -1,5 +1,6 @@
 <?php
     include "koneksi.php";
+    $idmutasi=$_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +61,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Data Master
@@ -95,7 +96,6 @@
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Mutasi Piket
-                <span class="badge badge-info right">2</span>
               </p>
             </a>
           </li>
@@ -169,7 +169,7 @@
           <?php 
           $query = mysqli_query($conn,"SELECT `tb_detil_mutasi_barang`.*, tb_barang.nama_barang, tb_barang.jml_barang
                                       FROM `tb_detil_mutasi_barang`,tb_barang
-                                      WHERE `tb_detil_mutasi_barang`.id_barang=tb_barang.id_barang AND id_mutasi_jaga='1'");
+                                      WHERE `tb_detil_mutasi_barang`.id_barang=tb_barang.id_barang AND id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
@@ -219,7 +219,7 @@
           $query = mysqli_query($conn,"SELECT tb_detil_mutasi_personil.*, tb_personil.nama_personil, tb_personil.pangkat_personil, tb_personil.nrp_personil
                                         FROM tb_detil_mutasi_personil, tb_personil
                                         WHERE tb_detil_mutasi_personil.id_personil=tb_personil.id_personil
-          AND id_mutasi_jaga='1'");
+                                        AND id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
@@ -264,7 +264,7 @@
                 </thead>
                 <tbody>
           <?php 
-          $query = mysqli_query($conn,"SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='1'");
+          $query = mysqli_query($conn,"SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>

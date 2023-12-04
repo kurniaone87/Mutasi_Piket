@@ -53,7 +53,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">
+            <a href="dashboard.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -91,7 +91,7 @@
           </li>
           <li class="nav-header">TRANSAKSI</li>
           <li class="nav-item">
-            <a href="trx_mutasijaga.php" class="nav-link active">
+            <a href="trx_mutasijaga.php" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Mutasi Piket
@@ -120,12 +120,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Kelola Mutasi Piket</h1>
+            <h1>Dashboard</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
-              <li class="breadcrumb-item active">Mutasi Piket</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div>
         </div>
@@ -134,123 +133,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Data Mutasi Piket Jaga</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <div class="button-table">
-                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah Mutasi Piket Jaga</a>
-              </div>
-            </div>
-            <div class="card-body">  
-
-          <?php 
-          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE status_mutasi='0'");
-          while ($data = mysqli_fetch_assoc($query)) 
-          {
-          ?>
-              <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tanggal</th>
-                  <th>Analisis</th>
-                  <th>Evaluasi</th>
-                  <th>Status</th>
-                  <th>Aksi</th>
-                </tr>
-                </thead>
-                <tbody>
-            <tr>
-              <td><?php echo $data['id_mutasi_jaga']; ?></td>
-              <td><?php echo $data['tgl_mutasi']; ?></td>
-              <td><?php echo $data['analisis']; ?></td>
-              <td><?php echo $data['evaluasi']; ?></td>
-              
-                <?php 
-                  if ($data['status_mutasi']==1){
-                    echo "<td>Approved</td>";
-                  }else{
-                    echo "<td>Pending</td>";
-                  }
-                ?>
-              
-              <td>
-                <a href="detil_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-warning">Detil</a>
-              </td>
-            </tr>
-          <?php               
-          } 
-          ?>
-        </tbody>
-
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <!-- HISTORY MUTASI -->
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">History Mutasi Piket Jaga</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">  
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tanggal</th>
-                  <th>Analisis</th>
-                  <th>Evaluasi</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-          <?php 
-          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE status_mutasi='1'");
-          while ($data = mysqli_fetch_assoc($query)) 
-          {
-          ?>
-            <tr>
-              <td><?php echo $data['id_mutasi_jaga']; ?></td>
-              <td><?php echo $data['tgl_mutasi']; ?></td>
-              <td><?php echo $data['analisis']; ?></td>
-              <td><?php echo $data['evaluasi']; ?></td>
-                <?php 
-                  if ($data['status_mutasi']==1){
-                    echo "<td>Approved</td>";
-                  }
-                ?>
-              <td>
-                  <a href="history_mutasijaga.php" type="button" class="btn btn-md btn-primary">Detil</a>
-              </td>
-            </tr>
-          <?php               
-          } 
-          ?>
-        </tbody>
-
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+<!-- DASHBOARD DISINI -->
     </section>
     <!-- /.content -->
   </div>
@@ -260,19 +143,41 @@
               
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Tambah Mutasi Jaga</h4>
+                    <h4 class="modal-title">Tambah data user</h4>
                   </div>
                   <div class="modal-body">
-                    
                     <form role="form" action="action/tambah.php" method="post">
-                    <input type="hidden" name="action" value="createMutasiJaga">
-                      
+                    <input type="hidden" name="action" value="createUser">
+
                         <div class="form-group">   
-                          <label>Yakin menambah data Mutasi Jaga!</label>       
+                          <label>Personil</label>
+                          <select name="personil" id="personil" class="form-control">
+                              <option disabled selected> Pilih Personil </option>
+                              <?php 
+                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user WHERE status_user='1') and status_personil <> '0'");
+                                while ($data=mysqli_fetch_array($sql)) {
+                              ?>
+                                <option value="<?=$data['id_personil']?>"><?=$data['nama_personil']?></option> 
+                              <?php
+                                }
+                              ?>
+                          </select>
+                          
+                          <label>Username</label>
+                          <input type="text" name="username" class="form-control" value="">  
+                          
+                          <label>Password</label>
+                          <input type="password" name="password" class="form-control" value="">
+                          
+                          <label>Role</label>
+                          <select name="level" id="level"  class="form-control">
+                            <option value="admin">Admin</option>
+                            <option value="petugas">Petugas</option>
+                          </select>        
                         </div>
                         
                         <div class="modal-footer">  
-                          <button type="submit" name="submit" class="btn btn-success">Yakin! Tambah Data</button>
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         </div>       
                       </form>
