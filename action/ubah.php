@@ -65,5 +65,7 @@ if ($_POST['action'] == 'updatePersonil') {
   updatePersonil($conn);
 } elseif ($_POST['action'] == 'updateUser') {
   updateUser($conn);
+} elseif ($_POST['action'] == 'updateBarang') {
+  updateBarang($conn);
 }
 ?>
