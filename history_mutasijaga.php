@@ -186,9 +186,6 @@
 
               </table>
                 </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Data Barang</button>
-                </div>
             </div>
             <!-- /.card -->
           </div>
@@ -236,9 +233,6 @@
 
               </table>
               </div>
-              <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Personil Piket</button>
-                </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -277,9 +271,6 @@
           ?>
         </tbody>
               </table>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Aktivitas Mutasi</button>
                 </div>
             </div>
             <!-- /.card -->

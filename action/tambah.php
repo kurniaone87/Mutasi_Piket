@@ -62,12 +62,38 @@ function createBarang($conn) {
   }
 }
 
+// mutasi_jaga
+function createMutasiJaga($conn) {
+  $tgl = date('Y-m-d H:i:s');
+  if (isset($_POST['submit'])) {
+    // cek di tabel mutasi
+    $cekmutasi = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE status_mutasi='0'");
+    $data = mysqli_num_rows($cekmutasi);
+    if ($data>0){
+      echo "Error";
+    }else{
+    $querymutasi = "INSERT INTO tb_mutasi_jaga (id_user,tgl_mutasi,analisis,evaluasi,status_mutasi) 
+                    VALUES ('1','$tgl','','','0')";
+    $result = mysqli_query($conn, $querymutasi);
+    
+    if ($result) {
+      $_SESSION['success'] = "Data barang berhasil ditambahkan.";
+      header('Location: ../trx_mutasijaga.php');
+    } else {
+      $_SESSION['error'] = "Data mutasi gagal ditambahkan.";
+    }
+  }
+  }
+}
+
 if ($_POST['action'] == 'createPersonil') {
   createPersonil($conn);
 } elseif ($_POST['action'] == 'createUser') {
   createUser($conn);
 } elseif ($_POST['action'] == 'createBarang') {
   createBarang($conn);
+} elseif ($_POST['action'] == 'createMutasiJaga') {
+  createMutasiJaga($conn);
 }
 
 

@@ -60,8 +60,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Data Master
@@ -152,10 +152,16 @@
             <!-- /.card-header -->
             <div class="card-body">
               <div class="button-table">
-                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah User</a>
+                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah Mutasi Piket Jaga</a>
               </div>
             </div>
             <div class="card-body">  
+
+          <?php 
+          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE status_mutasi='0'");
+          while ($data = mysqli_fetch_assoc($query)) 
+          {
+          ?>
               <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -168,11 +174,6 @@
                 </tr>
                 </thead>
                 <tbody>
-          <?php 
-          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE status_mutasi='0'");
-          while ($data = mysqli_fetch_assoc($query)) 
-          {
-          ?>
             <tr>
               <td><?php echo $data['id_mutasi_jaga']; ?></td>
               <td><?php echo $data['tgl_mutasi']; ?></td>
@@ -188,7 +189,7 @@
                 ?>
               
               <td>
-                <a href="detil_mutasijaga.php" type="button" class="btn btn-md btn-success">Detil</a>
+                <a href="detil_mutasijaga.php&id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-warning">Detil</a>
               </td>
             </tr>
           <?php               
@@ -242,7 +243,7 @@
                   }
                 ?>
               <td>
-                  <a href="history_mutasijaga.php" type="button" class="btn btn-md btn-success">Detil</a>
+                  <a href="history_mutasijaga.php" type="button" class="btn btn-md btn-primary">Detil</a>
               </td>
             </tr>
           <?php               
@@ -273,26 +274,14 @@
                   <div class="modal-body">
                     
                     <form role="form" action="action/tambah.php" method="post">
-                    <input type="hidden" name="action" value="createMutasi">
+                    <input type="hidden" name="action" value="createMutasiJaga">
                       
                         <div class="form-group">   
-                          <label>Personil</label>
-                          
-                          <label>Username</label>
-                          <input type="text" name="username" class="form-control" value="">  
-                          
-                          <label>Password</label>
-                          <input type="password" name="password" class="form-control" value="">
-                          
-                          <label>Role</label>
-                          <select name="level" id="level"  class="form-control">
-                            <option value="admin">Admin</option>
-                            <option value="petugas">Petugas</option>
-                          </select>        
+                          <label>Yakin menambah data Mutasi Jaga!</label>       
                         </div>
                         
                         <div class="modal-footer">  
-                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                          <button type="submit" name="submit" class="btn btn-success">Yakin! Tambah Data</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         </div>       
                       </form>
