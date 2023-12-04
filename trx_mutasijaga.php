@@ -70,7 +70,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="user.php" class="nav-link active">
+                <a href="user.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data User</p>
                 </a>
@@ -91,7 +91,7 @@
           </li>
           <li class="nav-header">TRANSAKSI</li>
           <li class="nav-item">
-            <a href="trx_mutasijaga.php" class="nav-link">
+            <a href="trx_mutasijaga.php" class="nav-link active">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Mutasi Piket
@@ -129,12 +129,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>User</h1>
+            <h1>Kelola Mutasi Piket</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Data Master</a></li>
-              <li class="breadcrumb-item active">Data User</li>
+              <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+              <li class="breadcrumb-item active">Mutasi Piket</li>
             </ol>
           </div>
         </div>
@@ -147,7 +147,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Kelola Data User</h3>
+              <h3 class="card-title">Data Mutasi Piket Jaga</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -159,42 +159,38 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>ID User</th>
-                  <th>Nama User</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Role</th>
+                  <th>ID</th>
+                  <th>Hari</th>
+                  <th>Tanggal</th>
+                  <th>Analisis</th>
+                  <th>Evaluasi</th>
                   <th>Status</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
           <?php 
-          $query = mysqli_query($conn,"SELECT id_user,tb_personil.nama_personil,username,password,level,status_user 
-                    FROM tb_user,tb_personil
-                    WHERE tb_user.id_personil=tb_personil.id_personil");
+          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
             <tr>
-              <td><?php echo $data['id_user']; ?></td>
-              <td><?php echo $data['nama_personil']; ?></td>
-              <td><?php echo $data['username']; ?></td>
-              <td><?php echo $data['password']; ?></td>
-              <td><?php echo $data['level']; ?></td>
+              <td><?php echo $data['id_mutasi_jaga']; ?></td>
+              <td><?php echo $data['hari_mutasi']; ?></td>
+              <td><?php echo $data['tgl_mutasi']; ?></td>
+              <td><?php echo $data['analisis']; ?></td>
+              <td><?php echo $data['evaluasi']; ?></td>
               
                 <?php 
-                  if ($data['status_user']==1){
-                    echo "<td>Aktif</td>";
+                  if ($data['status_mutasi']==1){
+                    echo "<td>Approved</td>";
                   }else{
-                    echo "<td>Tidak Aktif</td>";
+                    echo "<td>Pending</td>";
                   }
                 ?>
               
               <td>
-               <a href="#" type="button" class="btn btn-md <?php echo ($data['status_user'] == '0') ? 'btn-warning disabled' : 'btn-success'; ?>" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>">Edit</a>
-
-              <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>Delete">Delete</a>
+                <a href="trx_detilmutasi" type="button" class="btn btn-md btn-success">Detil</a>
               </td>
             </tr>
             <!-- Modal Edit User-->
