@@ -189,64 +189,41 @@
               </td>
             </tr>
             <!-- Modal Edit User-->
-            <div class="modal fade" id="myModal<?php echo $data['id_user']; ?>" role="dialog">
+            <div class="modal fade" id="myModal<?php echo $data['id_barang']; ?>" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Update Data User</h4>
+                    <h4 class="modal-title">Update Data Barang</h4>
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/ubah.php" method="post">
 
                         <?php
-                          $id = $data['id_user']; 
-                          $query_edit = mysqli_query($conn,"SELECT tb_user.*, tb_personil.nama_personil FROM tb_user, tb_personil WHERE tb_user.id_personil=tb_personil.id_personil AND tb_user.id_user='$id'");
+                          $id = $data['id_barang']; 
+                          $query_edit = mysqli_query($conn,"SELECT * FROM tb_barang WHERE id_barang='$id'");
                           while ($row = mysqli_fetch_array($query_edit)) {  
                         ?>
-
-                        <input type="hidden" name="id_user" value="<?php echo $row['id_user']; ?>">
+                        <input type="hidden" name="action" value="updateBarang">
+                        <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
 
                         <div class="form-group">
-                          <label>Nama Personil</label>
-                          <input type="text" name="nama_personil" class="form-control" value="<?php echo $row['nama_personil']; ?>" disabled>      
+                          <label>Nama Barang</label>
+                          <input type="text" name="namabarang" class="form-control" value="<?php echo $row['nama_barang']; ?>">      
                         </div>
 
                         <div class="form-group">
-                          <label>Username</label>
-                          <input type="text" name="username" class="form-control" value="<?php echo $row['username']; ?>">      
-                        </div>
-
-                        <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" name="password" class="form-control" value="<?php echo $row['password']; ?>">      
-                        </div>
-
-                        <div class="form-group">
-                          <label>Role</label>
-                          <?php 
-                            if ($row['status_user']=='1'){
-                              echo "<select name=\"level\" class=\"form-control\">
-                                      <option value=\"admin\">admin</option>
-                                      <option value=\"petugas\">petugas</option>      
-                              </select>";
-                            }else{
-                              echo "<input type=\"text\" name=\"level\" class=\"form-control\" value=".$row['level']." disabled>";
-                            } ?>      
+                          <label>Jumlah</label>
+                          <input type="text" name="jmlbarang" class="form-control" value="<?php echo $row['jml_barang']; ?>">      
                         </div>
 
                         <div class="form-group">
                           <label>Status</label>
-                          <?php 
-                            if ($row['status_user']=='1'){
-                              echo "<select name=\"status\" class=\"form-control\">
-                                      <option value=\"1\">Aktif</option>
-                                      <option value=\"0\">Tidak Aktif</option>      
-                              </select>";
-                            }else{
-                              echo "<input type=\"text\" name=\"status\" class=\"form-control\" value=\"Tidak Aktif\" disabled>";
-                            } ?>     
+                            <select name="status_brg" class="form-control">
+                                      <option value="1">Aktif</option>
+                                      <option value="0">Tidak Aktif</option>      
+                            </select>
                         </div>
                         
                         <div class="modal-footer">  
