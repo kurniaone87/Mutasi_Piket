@@ -91,10 +91,10 @@
           </li>
           <li class="nav-header">TRANSAKSI</li>
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
+            <a href="trx_mutasijaga.php" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
-                Calendar
+                Mutasi Piket
                 <span class="badge badge-info right">2</span>
               </p>
             </a>
@@ -133,8 +133,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
+              <li class="breadcrumb-item"><a href="#">Data Master</a></li>
+              <li class="breadcrumb-item active">Data Personil</li>
             </ol>
           </div>
         </div>
