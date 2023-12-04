@@ -95,7 +95,6 @@
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Mutasi Piket
-                <span class="badge badge-info right">2</span>
               </p>
             </a>
           </li>

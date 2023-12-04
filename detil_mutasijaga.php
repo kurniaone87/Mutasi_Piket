@@ -255,7 +255,7 @@
               <!-- /.card-header -->
                 <div class="card-body">
 <!-- disini untuk tabel List Mutasi -->
-<table class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Waktu Aktivitas</th>

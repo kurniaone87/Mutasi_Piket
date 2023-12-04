@@ -60,6 +60,24 @@ function updateBarang($conn) {
   }
 }
 
+function updateMutasiJaga($conn) {
+  if (isset($_POST['submit'])) {
+    $id_mutasi_jaga = $_POST['id_mutasi_jaga'];
+    $analisa = $_POST['analisa'];
+    $evaluasi = $_POST['evaluasi'];
+
+    $query = "UPDATE tb_mutasi_jaga SET `analisis`='$analisa', `evaluasi`='$evaluasi', `status_mutasi`='1' WHERE `id_mutasi_jaga`='$id_mutasi_jaga'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+      $_SESSION['success'] = "Data personil berhasil diupdate.";
+      header('Location: ../trx_mutasijaga.php');
+    } else {
+      $_SESSION['error'] = "Data personil gagal diupdate.";
+    }
+  }
+}
+
 
 if ($_POST['action'] == 'updatePersonil') {
   updatePersonil($conn);
@@ -67,5 +85,7 @@ if ($_POST['action'] == 'updatePersonil') {
   updateUser($conn);
 } elseif ($_POST['action'] == 'updateBarang') {
   updateBarang($conn);
+} elseif ($_POST['action'] == 'updateMutasiJaga') {
+  updateMutasiJaga($conn);
 }
 ?>
