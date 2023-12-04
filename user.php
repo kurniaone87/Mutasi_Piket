@@ -192,7 +192,9 @@
                 ?>
               
               <td>
-                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>">Edit</a>
+               <a href="#" type="button" class="btn btn-md <?php echo ($data['status_user'] == '0') ? 'btn-warning disabled' : 'btn-success'; ?>" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>">Edit</a>
+
+              <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>Delete">Delete</a>
               </td>
             </tr>
             <!-- Modal Edit User-->
@@ -214,6 +216,7 @@
                         ?>
 
                         <input type="hidden" name="id_user" value="<?php echo $row['id_user']; ?>">
+                        <input type="hidden" name="action" value="updateUser">
 
                         <div class="form-group">
                           <label>Nama Personil</label>
@@ -270,6 +273,75 @@
                 
               </div>
             </div>
+
+            <!-- Modal Delete -->
+             <div class="modal fade" id="myModal<?php echo $data['id_user']; ?>Delete" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Anda Yakin Ingin Menghapus Data User?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/hapus.php" method="post">
+
+                        <?php
+                          $id = $data['id_user']; 
+                          $query_edit = mysqli_query($conn,"SELECT tb_user.*, tb_personil.nama_personil FROM tb_user, tb_personil WHERE tb_user.id_personil=tb_personil.id_personil AND tb_user.id_user='$id'");
+                          while ($row = mysqli_fetch_array($query_edit)) {  
+                        ?>
+
+                        <input type="hidden" name="id_user" value="<?php echo $row['id_user']; ?>">
+                        <input type="hidden" name="action" value="deleteUser">
+
+                        <div class="form-group">
+                          <label>Nama Personil</label>
+                          <input type="text" name="nama_personil" class="form-control" value="<?php echo $row['nama_personil']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Username</label>
+                          <input type="text" name="username" class="form-control" value="<?php echo $row['username']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Password</label>
+                          <input type="text" name="password" class="form-control" value="<?php echo $row['password']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Role</label>
+                            <input type="text" name="level" class="form-control" value="<?php echo $row['level']; ?>" disabled>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Status</label>
+                          <?php 
+                            if ($row['status_user']=='1'){
+                              echo "<select name=\"status\" class=\"form-control\" disabled>
+                                      <option value=\"1\">Aktif</option>
+                                      <option value=\"0\">Tidak Aktif</option>      
+                              </select>";
+                            }else{
+                              echo "<input type=\"text\" name=\"status\" class=\"form-control\" value=\"Tidak Aktif\" disabled>";
+                            } ?>     
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-danger">Hapus Data User</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+
+                        <?php 
+                        }
+                        ?>        
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
           <?php               
           } 
           ?>
@@ -297,6 +369,7 @@
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createUser">
 
                         <div class="form-group">   
                           <label>Personil</label>
