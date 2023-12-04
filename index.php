@@ -1,3 +1,28 @@
+<?php
+session_start();
+
+include 'koneksi.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $data = mysqli_query($conn, "SELECT * FROM tb_user WHERE username='$username' AND password='$password'");
+    $cek = mysqli_num_rows($data);
+
+   if ($cek > 0) {
+        $row = mysqli_fetch_assoc($data);
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['status'] = "login";
+        $_SESSION['level'] = $row['level']; 
+        header("location: dashboard.php");
+        exit(); 
+    } else {
+        $errorMessage = "Username atau password Anda salah. Silakan coba lagi!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,16 +46,22 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="index2.html"><b>Admin</b>LTE</a>
+    <a href="index2.html"><b>Login</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="index3.html" method="post">
+      <?php
+    if (isset($errorMessage)) {
+        echo '<div class="alert alert-danger" role="alert">' . $errorMessage . '</div>';
+    }
+    ?>
+
+      <form action="" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text" class="form-control" placeholder="Username" name="username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -38,7 +69,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -47,12 +78,12 @@
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
+            <!-- <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
                 Remember Me
               </label>
-            </div>
+            </div> -->
           </div>
           <!-- /.col -->
           <div class="col-4">
@@ -62,7 +93,7 @@
         </div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
+      <!-- <div class="social-auth-links text-center mb-3">
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-primary">
           <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
@@ -70,15 +101,15 @@
         <a href="#" class="btn btn-block btn-danger">
           <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
         </a>
-      </div>
+      </div> -->
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>
