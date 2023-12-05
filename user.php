@@ -415,7 +415,7 @@
                               <?php
                                 }
                               ?>
-                          </select>
+                          </select> 
                           
                           <label>Username</label>
                           <input type="text" name="username" class="form-control" value="">  

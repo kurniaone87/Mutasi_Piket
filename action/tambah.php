@@ -1,6 +1,7 @@
 <?php 
 include('../koneksi.php');
 
+// user
 function createUser($conn) {
   if ($_POST['personil'] == NULL){
       header('Location: ../index.php?pages=user');
@@ -24,6 +25,7 @@ function createUser($conn) {
 }
 }
  
+// personil
 function createPersonil($conn) {
   if (isset($_POST['submit'])) {
     $id_personil = $_POST['id_personil'];
@@ -86,6 +88,74 @@ function createMutasiJaga($conn) {
   }
 }
 
+// detail mutasi
+function createMutasiJagaDetail($conn) {
+    if (isset($_POST['submit'])) {
+        $id_mutasi_jaga = $_POST['id_mutasi_jaga'];
+        $id_barang = $_POST['barang'];
+        $keterangan = $_POST['keterangan'];
+
+      $querybarang = "INSERT INTO tb_detil_mutasi_barang (id_mutasi_jaga, id_barang, keterangan) 
+                VALUES ('$id_mutasi_jaga', '$id_barang', '$keterangan')";
+        $result = mysqli_query($conn, $querybarang);
+
+        if ($result) {
+            $_SESSION['success'] = "Data barang berhasil ditambahkan.";
+            header('Location: ../detil_mutasijaga.php?id=' . $id_mutasi_jaga);
+        } else {
+            $_SESSION['error'] = "Data barang gagal ditambahkan.";
+                echo "Error: " . mysqli_error($conn);
+
+        }
+    }
+}
+
+// detail personil
+function createMutasiJagaPersonil($conn) {
+    if (isset($_POST['submit'])) {
+        $id_mutasi_jaga = $_POST['id_mutasi_jaga'];
+        $personil = $_POST['personil'];
+
+      $querybarang = "INSERT INTO tb_detil_mutasi_personil (id_mutasi_jaga, id_personil) 
+                VALUES ('$id_mutasi_jaga', '$personil')";
+        $result = mysqli_query($conn, $querybarang);
+
+        if ($result) {
+            $_SESSION['success'] = "Data barang berhasil ditambahkan.";
+            header('Location: ../detil_mutasijaga.php?id=' . $id_mutasi_jaga);
+        } else {
+            $_SESSION['error'] = "Data barang gagal ditambahkan.";
+                echo "Error: " . mysqli_error($conn);
+
+        }
+    }
+}
+
+// Tambah aktivitas mutasi
+function createAktivitasMutasi($conn) {
+    if (isset($_POST['submit'])) {
+        $id_mutasi_jaga = $_POST['id_mutasi_jaga'];
+        $waktu_mutasi = $_POST['waktu_mutasi'];
+        $keterangan_mutasi = $_POST['keterangan_mutasi'];
+
+        $waktu_mutasi = date('Y-m-d H:i:s', strtotime($waktu_mutasi));
+
+        $queryAktivitas = "INSERT INTO tb_list_mutasi (id_mutasi_jaga, waktu_mutasi, keterangan_mutasi) 
+                          VALUES ('$id_mutasi_jaga', '$waktu_mutasi', '$keterangan_mutasi')";
+        
+        $result = mysqli_query($conn, $queryAktivitas);
+
+        if ($result) {
+            $_SESSION['success'] = "Data aktivitas mutasi berhasil ditambahkan.";
+            header('Location: ../detil_mutasijaga.php?id=' . $id_mutasi_jaga);
+        } else {
+            $_SESSION['error'] = "Data aktivitas mutasi gagal ditambahkan.";
+            echo "Error: " . mysqli_error($conn);
+        }
+    }
+}
+
+
 if ($_POST['action'] == 'createPersonil') {
   createPersonil($conn);
 } elseif ($_POST['action'] == 'createUser') {
@@ -94,8 +164,12 @@ if ($_POST['action'] == 'createPersonil') {
   createBarang($conn);
 } elseif ($_POST['action'] == 'createMutasiJaga') {
   createMutasiJaga($conn);
+} elseif ($_POST['action'] == 'createMutasiJagaDetail') {
+  createMutasiJagaDetail($conn);
+} elseif ($_POST['action'] == 'createMutasiJagaPersonil') {
+  createMutasiJagaPersonil($conn);
+} elseif ($_POST['action'] == 'createAktivitasMutasi') {
+  createAktivitasMutasi($conn);
 }
-
-
 
  ?>
