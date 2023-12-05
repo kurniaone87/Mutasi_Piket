@@ -184,6 +184,7 @@ $idmutasi=$_GET['id'];
             <!-- /.card-header -->
             <div class="card-body">
               <div class="button-table">
+
                 <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah Mutasi Piket Jaga</a>
               </div>
             </div>
@@ -222,8 +223,58 @@ $idmutasi=$_GET['id'];
               
               <td>
                 <a href="detil_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-warning">Detil</a>
+                <a href="#" type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#myModal<?php echo $data['id_mutasi_jaga']; ?>">Mutasi Jaga</a>
               </td>
             </tr>
+            <!-- Modal Edit User-->
+            <div class="modal fade" id="myModal<?php echo $data['id_mutasi_jaga']; ?>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Proses Mutasi Jaga</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/ubah.php" method="post">
+
+                        <?php
+                          $id = $data['id_mutasi_jaga']; 
+                          $query_edit = mysqli_query($conn,"SELECT * FROM tb_mutasi_jaga WHERE id_mutasi_jaga='$id'");
+                          while ($row = mysqli_fetch_array($query_edit)) {  
+                        ?>
+                        <input type="hidden" name="action" value="updateMutasiJaga">
+                        <input type="hidden" name="id_mutasi_jaga" value="<?php echo $row['id_mutasi_jaga']; ?>">
+
+                        <div class="form-group">
+                          <label>Tanggal</label>
+                          <input type="text" name="tanggal" class="form-control" value="<?php echo $row['tgl_mutasi']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Analisa</label>
+                          <textarea class="form-control" name="analisa" rows="6" placeholder="Analisa ..."></textarea>     
+                        </div>
+
+                        <div class="form-group">
+                          <label>Evaluasi</label>
+                          <textarea class="form-control" name="evaluasi" rows="6" placeholder="Evaluasi ..."></textarea>
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Mutasi Jaga</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+
+                        <?php 
+                        }
+                        ?>        
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
           <?php               
           } 
           ?>
