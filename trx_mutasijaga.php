@@ -215,7 +215,7 @@
               
                 <?php 
                   if ($data['status_mutasi']==1){
-                    echo "<td>Approved</td>";
+                    echo "<td>Selesai</td>";
                   }else{
                     echo "<td>Pending</td>";
                   }
@@ -322,7 +322,7 @@
               <td><?php echo $data['evaluasi']; ?></td>
                 <?php 
                   if ($data['status_mutasi']==1){
-                    echo "<td>Approved</td>";
+                    echo "<td>Selesai</td>";
                   }
                 ?>
               <td>
