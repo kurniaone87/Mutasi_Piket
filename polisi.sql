@@ -12,7 +12,7 @@ MySQL - 8.0.30 : Database - polisi
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`polisi` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`polisi` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `polisi`;
 
@@ -27,7 +27,7 @@ CREATE TABLE `setting` (
   `nrp_pj` int DEFAULT NULL,
   `status_pj` smallint DEFAULT NULL,
   PRIMARY KEY (`id_setting`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `setting` */
 
@@ -41,7 +41,7 @@ CREATE TABLE `tb_barang` (
   `jml_barang` varchar(1024) DEFAULT NULL,
   `status_brg` smallint DEFAULT NULL,
   PRIMARY KEY (`id_barang`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_barang` */
 
@@ -57,16 +57,20 @@ DROP TABLE IF EXISTS `tb_detil_mutasi_barang`;
 CREATE TABLE `tb_detil_mutasi_barang` (
   `id_mutasi_jaga` int NOT NULL,
   `id_barang` int NOT NULL,
-  `keterangan` varchar(20) DEFAULT NULL,
+  `kelengkapan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `keterangan` text,
   PRIMARY KEY (`id_mutasi_jaga`,`id_barang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_detil_mutasi_barang` */
 
-insert  into `tb_detil_mutasi_barang`(`id_mutasi_jaga`,`id_barang`,`keterangan`) values 
-(1,1,'Lengkap'),
-(1,2,'Lengkap'),
-(1,3,'Lengkap');
+insert  into `tb_detil_mutasi_barang`(`id_mutasi_jaga`,`id_barang`,`kelengkapan`,`keterangan`) values 
+(1,1,'Lengkap','-'),
+(1,2,'Lengkap','-'),
+(5,3,'Lengkap','-'),
+(9,1,'Lengkap','-'),
+(9,2,'Tidak Lengkap','satu barang diperbaiki'),
+(9,3,'Lengkap','');
 
 /*Table structure for table `tb_detil_mutasi_personil` */
 
@@ -76,31 +80,34 @@ CREATE TABLE `tb_detil_mutasi_personil` (
   `id_mutasi_jaga` int NOT NULL,
   `id_personil` int NOT NULL,
   PRIMARY KEY (`id_mutasi_jaga`,`id_personil`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_detil_mutasi_personil` */
 
 insert  into `tb_detil_mutasi_personil`(`id_mutasi_jaga`,`id_personil`) values 
 (1,1),
-(1,2);
+(1,2),
+(9,1),
+(9,2);
 
 /*Table structure for table `tb_list_mutasi` */
 
 DROP TABLE IF EXISTS `tb_list_mutasi`;
 
 CREATE TABLE `tb_list_mutasi` (
-  `id_list_mutasi` int NOT NULL,
+  `id_list_mutasi` int NOT NULL AUTO_INCREMENT,
   `id_mutasi_jaga` int DEFAULT NULL,
   `waktu_mutasi` time DEFAULT NULL,
   `keterangan_mutasi` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id_list_mutasi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_list_mutasi` */
 
 insert  into `tb_list_mutasi`(`id_list_mutasi`,`id_mutasi_jaga`,`waktu_mutasi`,`keterangan_mutasi`) values 
 (1,1,'08:00:00','Serah terima petugas piket jaga lama ke petugas jaga baru selama 1x24 jam dalam keadaan aman'),
-(2,1,'09:00:00','Personil melaksanakan stand by dari Command Center');
+(2,1,'09:00:00','Personil melaksanakan stand by dari Command Center'),
+(3,9,'11:43:00','Serah terima barang HT');
 
 /*Table structure for table `tb_mutasi_jaga` */
 
@@ -114,13 +121,17 @@ CREATE TABLE `tb_mutasi_jaga` (
   `evaluasi` text,
   `status_mutasi` smallint DEFAULT NULL,
   PRIMARY KEY (`id_mutasi_jaga`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_mutasi_jaga` */
 
 insert  into `tb_mutasi_jaga`(`id_mutasi_jaga`,`id_user`,`tgl_mutasi`,`analisis`,`evaluasi`,`status_mutasi`) values 
 (1,1,'2023-12-04 00:00:00','Pintu otomatis tidak berfungsi dengan baik\r\nSalah satu kran air washtafel rusak. Washtafel bocor dan pintu washtafel rusak.','Sudah dilakukan koordinasi dengan vendor untuk memperbaiki kerusakan.',1),
-(4,1,'2023-12-04 12:50:45','','',0);
+(5,1,'2023-12-04 14:36:13','disini analisa','disini evaluasi',1),
+(6,1,'2023-12-04 16:48:12','1','2',1),
+(7,1,'2023-12-04 16:48:52','22','22',1),
+(8,1,'2023-12-04 16:59:09','rrr','rrrr',1),
+(9,1,'2023-12-06 02:23:40','joss','joss',1);
 
 /*Table structure for table `tb_personil` */
 
@@ -133,14 +144,13 @@ CREATE TABLE `tb_personil` (
   `nrp_personil` int DEFAULT NULL,
   `status_personil` smallint DEFAULT NULL,
   PRIMARY KEY (`id_personil`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_personil` */
 
 insert  into `tb_personil`(`id_personil`,`nama_personil`,`pangkat_personil`,`nrp_personil`,`status_personil`) values 
 (1,'Anton Sulistyo','Briptu',7875645,1),
-(2,'Budi Santosa','Briptu',3457851,1),
-(3,'Cisilia Pradipta','Bripda',7654897,1);
+(2,'Budi Santosa','Briptu',3457851,1);
 
 /*Table structure for table `tb_user` */
 
@@ -154,7 +164,7 @@ CREATE TABLE `tb_user` (
   `level` varchar(1024) DEFAULT NULL,
   `status_user` smallint DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_user` */
 
