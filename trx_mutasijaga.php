@@ -8,6 +8,7 @@
 
 
       $level = $_SESSION['level'];
+$idmutasi=$_GET['id'];
 
 ?>
 
@@ -325,7 +326,7 @@
                   }
                 ?>
               <td>
-                  <a href="history_mutasijaga.php" type="button" class="btn btn-md btn-primary">Detil</a>
+                  <a href="history_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-primary">Detil</a>
               </td>
             </tr>
           <?php               

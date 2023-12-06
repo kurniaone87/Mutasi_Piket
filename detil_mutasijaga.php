@@ -9,7 +9,8 @@
 
       $level = $_SESSION['level'];
 
-    $idmutasi=$_GET['id'];
+  //  $id_mutasi_jaga = isset($_GET['id']) ? $_GET['id'] : null;
+$idmutasi=$_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -219,8 +220,54 @@
               </table>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Data Barang</button>
+                  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah Data Barang</button>
                 </div>
+
+                  <!-- Modal Tambah -->
+          <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+              
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Tambah data Barang</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createMutasiJagaDetail">
+                     <input type="hidden" name="id_mutasi_jaga" value="<?= $idmutasi ?>">
+
+                        <div class="form-group">   
+                          <label>Nama Barang</label>
+                          <select name="barang" class="form-control">
+                              <option disabled selected> Pilih Barang </option>
+                              <?php
+                              $sql = mysqli_query($conn, "SELECT * FROM tb_barang 
+                                                          WHERE id_barang NOT IN 
+                                                              (SELECT id_barang FROM tb_detil_mutasi_barang 
+                                                              WHERE id_mutasi_jaga = '$idmutasi')");
+                              while ($data = mysqli_fetch_array($sql)) {
+                                  ?>
+                                  <option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?></option>
+                              <?php
+                              }
+                              ?>
+                          </select>
+
+                          <label>Keterangan</label>
+                          <input type="text" name="keterangan" class="form-control" value="">    
+                          
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>       
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+        </div>
             </div>
             <!-- /.card -->
           </div>
@@ -235,7 +282,7 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-<!-- disini untuk tabel Persomnil Piket -->
+            <!-- disini untuk tabel Persomnil Piket -->
               <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -269,8 +316,57 @@
               </table>
               </div>
               <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Personil Piket</button>
+                  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalPersonil">Tambah Personil Piket</button>
                 </div>
+
+         <!-- Modal Tambah -->
+          <div class="modal fade" id="myModalPersonil" role="dialog">
+              <div class="modal-dialog">
+              
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Tambah data Barang</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createMutasiJagaPersonil">
+                     <input type="hidden" name="id_mutasi_jaga" value="<?= $idmutasi ?>">
+
+                        <div class="form-group">   
+                          <label>Nama Barang</label>
+                          <select name="personil" class="form-control">
+                            <option disabled selected> Pilih Personil </option>
+                            <?php
+                            $sqlPersonil = mysqli_query($conn, "SELECT * FROM tb_personil 
+                            WHERE id_personil NOT IN 
+                                (SELECT id_personil FROM tb_detil_mutasi_personil 
+                                WHERE id_mutasi_jaga = '$idmutasi')");
+                            while ($dataPersonil = mysqli_fetch_array($sqlPersonil)) {
+                            ?>
+                                <option value="<?= $dataPersonil['id_personil'] ?>"><?= $dataPersonil['nama_personil'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+
+                          <!-- <label>Keterangan</label>
+                          <input type="text" name="keterangan" class="form-control" value="">     -->
+                          
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>       
+                      </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+        
+        <!-- MODAL TAMBAH END -->
+
+
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -286,7 +382,7 @@
               </div>
               <!-- /.card-header -->
                 <div class="card-body">
-<!-- disini untuk tabel List Mutasi -->
+          <!-- disini untuk tabel List Mutasi -->
               <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -311,8 +407,41 @@
               </table>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Tambah Aktivitas Mutasi</button>
+                  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalAktivitas">Tambah Aktivitas Mutasi</button>
                 </div>
+
+                  <!-- Modal Tambah -->
+          <div class="modal fade" id="myModalAktivitas" role="dialog">
+              <div class="modal-dialog">
+              
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Tambah data Aktivitas</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createAktivitasMutasi">
+                    <input type="hidden" name="id_mutasi_jaga" value="<?= $idmutasi ?>">
+
+                    <div class="form-group">
+                        <label>Waktu Aktivitas</label>
+                        <input type="datetime-local" name="waktu_mutasi" class="form-control" required>
+                        
+                        <label>Keterangan Aktivitas</label>
+                        <textarea name="keterangan_mutasi" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+        
+        <!-- MODAL TAMBAH END -->
             </div>
             <!-- /.card -->
           </div>

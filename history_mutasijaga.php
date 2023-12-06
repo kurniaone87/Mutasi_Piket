@@ -9,6 +9,9 @@
 
       $level = $_SESSION['level'];
 
+$idmutasi=$_GET['id'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -200,7 +203,7 @@
           <?php 
           $query = mysqli_query($conn,"SELECT `tb_detil_mutasi_barang`.*, tb_barang.nama_barang, tb_barang.jml_barang
                                       FROM `tb_detil_mutasi_barang`,tb_barang
-                                      WHERE `tb_detil_mutasi_barang`.id_barang=tb_barang.id_barang AND id_mutasi_jaga='1'");
+                                      WHERE `tb_detil_mutasi_barang`.id_barang=tb_barang.id_barang AND id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
@@ -247,7 +250,7 @@
           $query = mysqli_query($conn,"SELECT tb_detil_mutasi_personil.*, tb_personil.nama_personil, tb_personil.pangkat_personil, tb_personil.nrp_personil
                                         FROM tb_detil_mutasi_personil, tb_personil
                                         WHERE tb_detil_mutasi_personil.id_personil=tb_personil.id_personil
-          AND id_mutasi_jaga='1'");
+          AND id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
@@ -289,7 +292,7 @@
                 </thead>
                 <tbody>
           <?php 
-          $query = mysqli_query($conn,"SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='1'");
+          $query = mysqli_query($conn,"SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='$idmutasi'");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
