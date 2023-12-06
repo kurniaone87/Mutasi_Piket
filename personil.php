@@ -51,7 +51,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="dist/img/korps.jpeg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
         <a href="#" class="d-block"><strong>SICATAT</strong> | MUTASI</a>
@@ -213,7 +213,7 @@
           <td><?php echo $data['status_personil']; ?></td>
           <td>
           <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal<?php echo $data['id_personil']; ?>">Edit</a>
-           <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_personil']; ?>Delete">Delete</a>
+           <!-- <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_personil']; ?>Delete">Delete</a> -->
           </td>
         </tr>
 
@@ -224,7 +224,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Update Data User</h4>
+                    <h4 class="modal-title">Update Data Personil</h4>
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/ubah.php" method="post">
