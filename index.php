@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -46,12 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="index2.html"><b>SI Mutasi Command Center Korp Brimob Polri</b></a>
+    <strong>SI CATAT</strong> | MUTASI<br>
+    <h6>Command Center Korp Brimob Polri</h6>
   </div>
+
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Sign In</p>
 
       <?php
     if (isset($errorMessage)) {
