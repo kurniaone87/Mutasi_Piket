@@ -93,10 +93,11 @@ function createMutasiJagaDetail($conn) {
     if (isset($_POST['submit'])) {
         $id_mutasi_jaga = $_POST['id_mutasi_jaga'];
         $id_barang = $_POST['barang'];
+        $kelengkapan= $_POST['kelengkapan'];
         $keterangan = $_POST['keterangan'];
 
-      $querybarang = "INSERT INTO tb_detil_mutasi_barang (id_mutasi_jaga, id_barang, keterangan) 
-                VALUES ('$id_mutasi_jaga', '$id_barang', '$keterangan')";
+      $querybarang = "INSERT INTO tb_detil_mutasi_barang (id_mutasi_jaga, id_barang, kelengkapan, keterangan) 
+                VALUES ('$id_mutasi_jaga', '$id_barang','$kelengkapan' ,'$keterangan')";
         $result = mysqli_query($conn, $querybarang);
 
         if ($result) {

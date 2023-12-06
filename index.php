@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="index2.html"><b>Login</b></a>
+    <a href="index2.html"><b>Sistem Informasi Kelola Mutasi Jaga</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

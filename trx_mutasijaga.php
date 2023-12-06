@@ -1,5 +1,5 @@
 <?php
-     session_start();
+    session_start();
     include "koneksi.php";
     
       if($_SESSION['status']!="login"){
@@ -8,7 +8,7 @@
 
 
       $level = $_SESSION['level'];
-$idmutasi=$_GET['id'];
+      // $idmutasi=$_GET['id'];
 
 ?>
 

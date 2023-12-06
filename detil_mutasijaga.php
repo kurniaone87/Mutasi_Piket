@@ -194,8 +194,8 @@ $idmutasi=$_GET['id'];
                   <th>ID Barang</th>
                   <th>Nama Barang</th>
                   <th>Jumlah Barang</th>
+                  <th>Kelengkapan</th>
                   <th>Keterangan</th>
-                  
                 </tr>
                 </thead>
                 <tbody>
@@ -210,6 +210,7 @@ $idmutasi=$_GET['id'];
               <td><?php echo $data['id_barang']; ?></td>
               <td><?php echo $data['nama_barang']; ?></td>
               <td><?php echo $data['jml_barang']; ?></td>
+              <td><?php echo $data['kelengkapan']; ?></td>
               <td><?php echo $data['keterangan']; ?></td>
             </tr>
           <?php               
@@ -252,9 +253,14 @@ $idmutasi=$_GET['id'];
                               }
                               ?>
                           </select>
+                          <label>Kelengkapan</label>
+                          <select name="kelengkapan" class="form-control">
+                            <option value="Lengkap">Lengkap</option>
+                            <option value="Tidak Lengkap">Tidak Lengkap</option>
+                          </select>
 
                           <label>Keterangan</label>
-                          <input type="text" name="keterangan" class="form-control" value="">    
+                          <textarea name="keterangan" class="form-control" rows="6" placeholder="Diisi jika barang tidak lengkap ..."></textarea>    
                           
                         </div>
                         
@@ -325,7 +331,7 @@ $idmutasi=$_GET['id'];
               
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Tambah data Barang</h4>
+                    <h4 class="modal-title">Tambah data Personil</h4>
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/tambah.php" method="post">
@@ -333,7 +339,7 @@ $idmutasi=$_GET['id'];
                      <input type="hidden" name="id_mutasi_jaga" value="<?= $idmutasi ?>">
 
                         <div class="form-group">   
-                          <label>Nama Barang</label>
+                          <label>Nama Personil</label>
                           <select name="personil" class="form-control">
                             <option disabled selected> Pilih Personil </option>
                             <?php
@@ -364,7 +370,7 @@ $idmutasi=$_GET['id'];
               </div>
         </div>
         
-        <!-- MODAL TAMBAH END -->
+        <!-- MODAL Personil END -->
 
 
               <!-- /.card-body -->
