@@ -6,7 +6,6 @@
         header("location: index.php");
       }
 
-
       $level = $_SESSION['level'];
 
 $idmutasi=$_GET['id'];

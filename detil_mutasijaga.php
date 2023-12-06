@@ -6,7 +6,6 @@
         header("location: index.php");
       }
 
-
       $level = $_SESSION['level'];
 
   //  $id_mutasi_jaga = isset($_GET['id']) ? $_GET['id'] : null;

@@ -70,7 +70,6 @@
             </a>
           </li>
 
-
           <?php
           if ($level == "admin") {
             ?>
