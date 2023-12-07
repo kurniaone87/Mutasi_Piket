@@ -103,7 +103,7 @@
               <li class="nav-item">
                 <a href="pj.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>PJ</p>
+                  <p>Penanggung Jawab</p>
                 </a>
               </li>
             </ul>
