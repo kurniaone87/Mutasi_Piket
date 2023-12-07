@@ -209,7 +209,7 @@
               <td><?php echo $data['evaluasi']; ?></td>
               <td><?php echo $data['nama_personil']; ?></td>              
               <td>
-                <a href="detil_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success">Cetak PDF</a>
+                <a href="laporan_pdf.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success">Cetak PDF</a>
               </td>
             </tr>
           <?php 
@@ -230,56 +230,6 @@
     </section>
     <!-- /.content -->
   </div>
-          <!-- Modal Tambah -->
-          <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog">
-              
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Tambah data user</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form role="form" action="action/tambah.php" method="post">
-                    <input type="hidden" name="action" value="createUser">
-
-                        <div class="form-group">   
-                          <label>Personil</label>
-                          <select name="personil" id="personil" class="form-control">
-                              <option disabled selected> Pilih Personil </option>
-                              <?php 
-                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user WHERE status_user='1') and status_personil <> '0'");
-                                while ($data=mysqli_fetch_array($sql)) {
-                              ?>
-                                <option value="<?=$data['id_personil']?>"><?=$data['nama_personil']?></option> 
-                              <?php
-                                }
-                              ?>
-                          </select> 
-                          
-                          <label>Username</label>
-                          <input type="text" name="username" class="form-control" value="">  
-                          
-                          <label>Password</label>
-                          <input type="password" name="password" class="form-control" value="">
-                          
-                          <label>Role</label>
-                          <select name="level" id="level"  class="form-control">
-                            <option value="admin">Admin</option>
-                            <option value="petugas">Petugas</option>
-                          </select>        
-                        </div>
-                        
-                        <div class="modal-footer">  
-                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        </div>       
-                      </form>
-                  </div>
-                </div>
-                
-              </div>
-        </div>
-        <!-- End of Modal Tambah -->
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
