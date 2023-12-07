@@ -125,6 +125,38 @@ while ($dataAnalisis = mysqli_fetch_assoc($queryAnalisis)) {
             $pdf->Cell(190, 6, $line, 1, 1);
         }
     }
+
+    // // Kolom Paraf
+    // $pdf->Cell(10); // Spasi
+    // $pdf->Cell(65, 40, 'Yang Menyerahkan', 0, 0);
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(65, 40, 'Yang Menerima', 0, 0);
+    // $pdf->Cell(60); // Spasi
+    // // $pdf->Cell(55, 40, 'Perwira Penanggung Jawab', 0, 1);
+
+    // $pdf->Cell(10); // Spasi
+    // $pdf->Cell(65, 10, '___________________', 0, 0); // Garis
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(55, 1, '___________________', 0, 1); // Garis
+
+    // $pdf->Cell(20, 20, 'No. NRP', 0, 0); // No. NRP
+    // $pdf->Cell(20, 0, 'Nama User', 0, 0); // Nama User
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(65, 5, 'Nama User', 0, 0); // Nama User
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(55, 5, 'Nama Setting', 0, 1); // Nama Setting
+
+    // $pdf->Cell(10); // Spasi
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(65, 5, '___________________', 0, 0); // Garis
+    // $pdf->Cell(60); // Spasi
+
+    // $pdf->Cell(10); // Spasi
+    // $pdf->Cell(65, 5, 'No. NRP', 0, 0); // No. NRP
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(65, 5, 'No. NRP', 0, 0); // No. NRP
+    // $pdf->Cell(60); // Spasi
+    // $pdf->Cell(55, 5, 'No. NRP Setting', 0, 1); // No. NRP Setting
 } 
 
 $pdf->Output();
