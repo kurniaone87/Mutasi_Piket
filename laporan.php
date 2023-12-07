@@ -73,7 +73,7 @@
           <?php
           if ($level == "admin") {
             ?>
-          <li class="nav-item has-treeview">
+         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
@@ -98,6 +98,12 @@
                 <a href="barang.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data Barang</p>
+                </a>
+              </li>
+                <li class="nav-item">
+                <a href="settings.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Penanggung Jawab</p>
                 </a>
               </li>
             </ul>
