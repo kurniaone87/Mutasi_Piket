@@ -100,8 +100,8 @@
                   <p>Data Barang</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="pj.php" class="nav-link">
+                <li class="nav-item">
+                <a href="settings.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penanggung Jawab</p>
                 </a>
@@ -165,12 +165,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>User</h1>
+            <h1>Penanggung Jawab</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Data Master</a></li>
-              <li class="breadcrumb-item active">Data User</li>
+              <li class="breadcrumb-item active">Data Penanggung Jawab</li>
             </ol>
           </div>
         </div>
@@ -183,44 +183,39 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Kelola Data User</h3>
+              <h3 class="card-title">Kelola Data Penanggung Jawab</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               <div class="button-table">
-                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah User</a>
+                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModalPJ">Tambah Penanggung Jawab</a>
               </div>
             </div>
             <div class="card-body">  
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>ID User</th>
-                  <th>Nama User</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Role</th>
+                  <th>ID Settings</th>
+                  <th>Nama Penanggung Jawab</th>
+                  <th>Pangkat PJ</th>
+                  <th>Nomor NRP</th>
                   <th>Status</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
           <?php 
-          $query = mysqli_query($conn,"SELECT id_user,tb_personil.nama_personil,username,password,level,status_user 
-                    FROM tb_user,tb_personil
-                    WHERE tb_user.id_personil=tb_personil.id_personil");
+          $query = mysqli_query($conn,"SELECT * FROM setting");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
             <tr>
-              <td><?php echo $data['id_user']; ?></td>
-              <td><?php echo $data['nama_personil']; ?></td>
-              <td><?php echo $data['username']; ?></td>
-              <td><?php echo $data['password']; ?></td>
-              <td><?php echo $data['level']; ?></td>
-              
+              <td><?php echo $data['id_setting']; ?></td>
+              <td><?php echo $data['perwira_penanggung_jawab']; ?></td>
+              <td><?php echo $data['pangkat_pj']; ?></td>
+              <td><?php echo $data['nrp_pj']; ?></td>
                 <?php 
-                  if ($data['status_user']==1){
+                  if ($data['status_pj']==1){
                     echo "<td>Aktif</td>";
                   }else{
                     echo "<td>Tidak Aktif</td>";
@@ -396,7 +391,7 @@
     <!-- /.content -->
   </div>
           <!-- Modal Tambah -->
-          <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal fade" id="myModalPJ" role="dialog">
               <div class="modal-dialog">
               
                 <div class="modal-content">
@@ -405,39 +400,30 @@
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/tambah.php" method="post">
-                    <input type="hidden" name="action" value="createUser">
+                    <input type="hidden" name="action" value="createPJ">
 
-                        <div class="form-group">   
-                          <label>Personil</label>
-                          <select name="personil" id="personil" class="form-control">
-                              <option disabled selected> Pilih Personil </option>
-                              <?php 
-                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user WHERE status_user='1') and status_personil <> '0'");
-                                while ($data=mysqli_fetch_array($sql)) {
-                              ?>
-                                <option value="<?=$data['id_personil']?>"><?=$data['nama_personil']?></option> 
-                              <?php
-                                }
-                              ?>
-                          </select> 
-                          
-                          <label>Username</label>
-                          <input type="text" name="username" class="form-control" value="">  
-                          
-                          <label>Password</label>
-                          <input type="password" name="password" class="form-control" value="">
-                          
-                          <label>Role</label>
-                          <select name="level" id="level"  class="form-control">
-                            <option value="admin">Admin</option>
-                            <option value="petugas">Petugas</option>
-                          </select>        
-                        </div>
+                    <label>Nama Penanggung Jawab</label>
+                    <input type="text" name="nama_pj" class="form-control" value="">  
+                    
+                    <label>Pangkat PJ</label>
+                    <input type="text" name="pangkat" class="form-control" value="">
+
+                     <label>Nomor NRP</label>
+                    <input type="text" name="no_nrp" class="form-control" value="">
+
+                     <label>Status Personil</label>
+                          <select name="status_pj" id="status_pj" class="form-control">
+                            <option value="Pilih Status" disabled selected>Pilih Status</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                          </select>
+                    
+                </div>
                         
-                        <div class="modal-footer">  
-                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        </div>       
+                <div class="modal-footer">  
+                    <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                </div>       
                       </form>
                   </div>
                 </div>
