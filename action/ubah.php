@@ -78,6 +78,21 @@ function updateMutasiJaga($conn) {
   }
 }
 
+function updatePJ($conn) {
+  if (isset($_POST['submit'])) {
+    $id_pj = $_POST['id_pj'];
+    $statuspj = $_POST['statuspj'];
+    $query = "UPDATE setting SET status_pj='$statuspj' WHERE id_setting='$id_pj'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+      $_SESSION['success'] = "Data personil berhasil diupdate.";
+      header('Location: ../pj.php');
+    } else {
+      $_SESSION['error'] = "Data personil gagal diupdate.";
+    }
+  }
+}
 
 if ($_POST['action'] == 'updatePersonil') {
   updatePersonil($conn);
@@ -87,5 +102,7 @@ if ($_POST['action'] == 'updatePersonil') {
   updateBarang($conn);
 } elseif ($_POST['action'] == 'updateMutasiJaga') {
   updateMutasiJaga($conn);
+} elseif ($_POST['action'] == 'updatePJ') {
+  updatePJ($conn);
 }
 ?>

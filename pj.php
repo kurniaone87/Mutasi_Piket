@@ -73,8 +73,8 @@
           <?php
           if ($level == "admin") {
             ?>
-         <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Data Master
@@ -101,7 +101,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pj.php" class="nav-link">
+                <a href="pj.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penanggung Jawab</p>
                 </a>
@@ -138,7 +138,7 @@
 
           <li class="nav-header">LAPORAN</li>
           <li class="nav-item">
-            <a href="laporan.php" class="nav-link active">
+            <a href="laporan.php" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Laporan Mutasi Jaga</p>
             </a>
@@ -165,12 +165,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Laporan</h1>
+            <h1>Penanggung Jawab</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Laporan</a></li>
-              <li class="breadcrumb-item active">Laporan Mutasi Jaga</li>
+              <li class="breadcrumb-item"><a href="#">Data Master</a></li>
+              <li class="breadcrumb-item active">Penanggung Jawab</li>
             </ol>
           </div>
         </div>
@@ -183,43 +183,111 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Laporan Mutasi Jaga</h3>
+              <h3 class="card-title">Kelola Data Penanggung Jawab</h3>
             </div>
             <!-- /.card-header -->
+            <div class="card-body">
+              <div class="button-table">
+                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah PJ</a>
+              </div>
+            </div>
             <div class="card-body">  
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Tanggal</th>
-                  <th>Analisis</th>
-                  <th>Evaluasi</th>
-                  <th>Pelaksana</th>
+                  <th>ID</th>
+                  <th>Nama PJ</th>
+                  <th>Pangkat</th>
+                  <th>NRP</th>
+                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
           <?php 
-          $no=1;
-          $query = mysqli_query($conn,"SELECT tb_mutasi_jaga.*, tb_user.id_personil, tb_personil.nama_personil 
-          FROM tb_mutasi_jaga, tb_user, tb_personil 
-          WHERE tb_mutasi_jaga.id_user=tb_user.id_user AND tb_user.id_personil=tb_personil.id_personil
-          AND tb_mutasi_jaga.status_mutasi='1' ORDER BY id_mutasi_jaga DESC");
+          $query = mysqli_query($conn,"SELECT * FROM setting");
           while ($data = mysqli_fetch_assoc($query)) 
           {
           ?>
             <tr>
-              <td><?php echo $no; ?></td>
-              <td><?php echo $data['tgl_mutasi']; ?></td>
-              <td><?php echo $data['analisis']; ?></td>
-              <td><?php echo $data['evaluasi']; ?></td>
-              <td><?php echo $data['nama_personil']; ?></td>              
+              <td><?php echo $data['id_setting']; ?></td>
+              <td><?php echo $data['perwira_penanggung_jawab']; ?></td>
+              <td><?php echo $data['pangkat_pj']; ?></td>
+              <td><?php echo $data['nrp_pj']; ?></td>
+              
+                <?php 
+                  if ($data['status_pj']==1){
+                    echo "<td>Aktif</td>";
+                  }else{
+                    echo "<td>Tidak Aktif</td>";
+                  }
+                ?>
+              
               <td>
-                <a href="laporan_pdf.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success" download>Cetak PDF</a>
+               <a href="#" type="button" class="btn btn-md btn-warning" data-toggle="modal" data-target="#myModal<?php echo $data['id_setting']; ?>">Edit</a>
+
+              <!-- <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>Delete">Delete</a> -->
               </td>
             </tr>
-          <?php 
-          $no++;            
+            <!-- Modal Edit User-->
+            <div class="modal fade" id="myModal<?php echo $data['id_setting']; ?>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Update Data Penanggung Jawab</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/ubah.php" method="post">
+
+                        <?php
+                          $id = $data['id_setting']; 
+                          $query_edit = mysqli_query($conn,"SELECT * FROM setting WHERE id_setting='$id'");
+                          while ($row = mysqli_fetch_array($query_edit)) {  
+                        ?>
+
+                        <input type="hidden" name="id_pj" value="<?php echo $row['id_setting']; ?>">
+                        <input type="hidden" name="action" value="updatePJ">
+
+                        <div class="form-group">
+                          <label>Nama Penanggung Jawab</label>
+                          <input type="text" name="namapj" class="form-control" value="<?php echo $row['perwira_penanggung_jawab']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Pangkat</label>
+                          <input type="text" name="pangkatpj" class="form-control" value="<?php echo $row['pangkat_pj']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>NRP</label>
+                          <input type="text" name="nrppj" class="form-control" value="<?php echo $row['nrp_pj']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Status</label>
+                              <select name="statuspj" class="form-control">
+                                      <option value="1">Aktif</option>
+                                      <option value="0">Tidak Aktif</option>      
+                              </select>    
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Perubahan Data</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+
+                        <?php 
+                        }
+                        ?>        
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          <?php               
           } 
           ?>
         </tbody>
@@ -236,6 +304,39 @@
     </section>
     <!-- /.content -->
   </div>
+          <!-- Modal Tambah -->
+          <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+              
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Tambah data PJ</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/tambah.php" method="post">
+                    <input type="hidden" name="action" value="createPJ">
+                          
+                          <label>Nama PJ</label>
+                          <input type="text" name="namapj" class="form-control" value="">  
+                          
+                          <label>Pangkat</label>
+                          <input type="text" name="pangkatpj" class="form-control" value="">
+                          
+                          <label>NRP</label>
+                          <input type="text" name="nrppj" class="form-control" value="">       
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>       
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+        </div>
+        <!-- End of Modal Tambah -->
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">

@@ -98,8 +98,8 @@
                   <p>Data Barang</p>
                 </a>
               </li>
-                <li class="nav-item">
-                <a href="settings.php" class="nav-link">
+              <li class="nav-item">
+                <a href="pj.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penanggung Jawab</p>
                 </a>
