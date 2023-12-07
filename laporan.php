@@ -1,5 +1,5 @@
 <?php
-    session_start();
+     session_start();
     include "koneksi.php";
     
       if($_SESSION['status']!="login"){
@@ -7,8 +7,8 @@
       }
 
       $level = $_SESSION['level'];
-?>
 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -53,7 +53,7 @@
         <img src="dist/img/korps.jpeg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><strong>SICATAT</strong> | MUTASI</a>
+        <a href="#" class="d-block"><strong>SICATAT</strong> | MUTASI</a>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link active">
+            <a href="dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -132,7 +132,7 @@
 
           <li class="nav-header">LAPORAN</li>
           <li class="nav-item">
-            <a href="laporan.php" class="nav-link">
+            <a href="laporan.php" class="nav-link active">
               <i class="nav-icon fas fa-file"></i>
               <p>Laporan Mutasi Jaga</p>
             </a>
@@ -159,12 +159,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Dashboard</h1>
-            <!-- <h5 class="mt-3">hello <?php echo $level;?></h5> -->
+            <h1>Laporan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item"><a href="#">Laporan</a></li>
+              <li class="breadcrumb-item active">Laporan Mutasi Jaga</li>
             </ol>
           </div>
         </div>
@@ -173,7 +173,60 @@
 
     <!-- Main content -->
     <section class="content">
-<!-- DASHBOARD DISINI -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Laporan Mutasi Jaga</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">  
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Tanggal</th>
+                  <th>Analisis</th>
+                  <th>Evaluasi</th>
+                  <th>Pelaksana</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+          <?php 
+          $no=1;
+          $query = mysqli_query($conn,"SELECT tb_mutasi_jaga.*, tb_user.id_personil, tb_personil.nama_personil 
+          FROM tb_mutasi_jaga, tb_user, tb_personil 
+          WHERE tb_mutasi_jaga.id_user=tb_user.id_user AND tb_user.id_personil=tb_personil.id_personil
+          AND tb_mutasi_jaga.status_mutasi='1' ORDER BY id_mutasi_jaga DESC");
+          while ($data = mysqli_fetch_assoc($query)) 
+          {
+          ?>
+            <tr>
+              <td><?php echo $no; ?></td>
+              <td><?php echo $data['tgl_mutasi']; ?></td>
+              <td><?php echo $data['analisis']; ?></td>
+              <td><?php echo $data['evaluasi']; ?></td>
+              <td><?php echo $data['nama_personil']; ?></td>              
+              <td>
+                <a href="detil_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success">Cetak PDF</a>
+              </td>
+            </tr>
+          <?php 
+          $no++;            
+          } 
+          ?>
+        </tbody>
+
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
@@ -201,7 +254,7 @@
                               <?php
                                 }
                               ?>
-                          </select>
+                          </select> 
                           
                           <label>Username</label>
                           <input type="text" name="username" class="form-control" value="">  

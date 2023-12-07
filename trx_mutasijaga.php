@@ -133,9 +133,9 @@
 
           <li class="nav-header">LAPORAN</li>
           <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.0" class="nav-link">
+            <a href="laporan.php" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
-              <p>Documentation</p>
+              <p>Laporan Mutasi Jaga</p>
             </a>
           </li>
 
