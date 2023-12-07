@@ -209,7 +209,7 @@
               <td><?php echo $data['evaluasi']; ?></td>
               <td><?php echo $data['nama_personil']; ?></td>              
               <td>
-                <a href="laporan_pdf.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success">Cetak PDF</a>
+                <a href="laporan_pdf.php?id=<?php echo $data['id_mutasi_jaga'];?>" type="button" class="btn btn-md btn-success" download>Cetak PDF</a>
               </td>
             </tr>
           <?php 

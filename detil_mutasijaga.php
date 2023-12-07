@@ -238,7 +238,7 @@ $idmutasi=$_GET['id'];
 
                         <div class="form-group">   
                           <label>Nama Barang</label>
-                          <select name="barang" class="form-control">
+                        <select name="barang" class="form-control" onchange="updateJumlahBarang()">
                               <option disabled selected> Pilih Barang </option>
                               <?php
                               $sql = mysqli_query($conn, "SELECT * FROM tb_barang 
@@ -247,11 +247,17 @@ $idmutasi=$_GET['id'];
                                                               WHERE id_mutasi_jaga = '$idmutasi')");
                               while ($data = mysqli_fetch_array($sql)) {
                                   ?>
-                                  <option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?></option>
+                                  <option value="<?= $data['id_barang'] ?>" data-jumlah="<?= $data['jml_barang'] ?>">
+                                      <?= $data['nama_barang'] ?>
+                                  </option>
                               <?php
                               }
                               ?>
                           </select>
+                          
+                        <label>Jumlah Barang</label>
+                        <input type="text" name="jumlah_barang" id="jumlah_barang" class="form-control" value="" readonly>
+
                           <label>Kelengkapan</label>
                           <select name="kelengkapan" class="form-control">
                             <option value="Lengkap">Lengkap</option>
@@ -295,6 +301,7 @@ $idmutasi=$_GET['id'];
                   <th>Nama Personil</th>
                   <th>Pangkat</th>
                   <th>No. NRP</th>
+                  <th>Keterangan</th>
                   
                 </tr>
                 </thead>
@@ -312,6 +319,7 @@ $idmutasi=$_GET['id'];
               <td><?php echo $data['nama_personil']; ?></td>
               <td><?php echo $data['pangkat_personil']; ?></td>
               <td><?php echo $data['nrp_personil']; ?></td>
+              <td><?php echo $data['keterangan']; ?></td>
             </tr>
           <?php               
           } 
@@ -354,8 +362,13 @@ $idmutasi=$_GET['id'];
                             ?>
                         </select>
 
-                          <!-- <label>Keterangan</label>
-                          <input type="text" name="keterangan" class="form-control" value="">     -->
+                          <label>Keterangan</label>
+                          <select name="keterangan" id="keterangan" class="form-control">
+                            <option disabled selected> Pilih Keterangan </option>
+                            <option name="ba_jaga"> BA Jaga </option>
+                            <option name="ta_jaga"> Ta Jaga </option>
+                            
+                          </select>
                           
                         </div>
                         
@@ -403,6 +416,8 @@ $idmutasi=$_GET['id'];
           ?>
             <tr>
               <td><?php echo $data['waktu_mutasi']; ?></td>
+                  <th>Status</th>
+                  <th>Status</th>
               <td><?php echo $data['keterangan_mutasi']; ?></td>
             </tr>
           <?php               
@@ -498,6 +513,18 @@ $idmutasi=$_GET['id'];
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function updateJumlahBarang() {
+        var select = document.getElementsByName("barang")[0];
+
+        var jumlahBarangInput = document.getElementById("jumlah_barang");
+
+        var selectedOption = select.options[select.selectedIndex];
+        var jumlahBarang = selectedOption.getAttribute("data-jumlah");
+
+        jumlahBarangInput.value = jumlahBarang;
+    }
 </script>
 </body>
 </html>
