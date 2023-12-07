@@ -9,4 +9,5 @@
       $level = $_SESSION['level'];
       
       $id=$_GET['id'];
+      echo $id;
 ?>
