@@ -10,240 +10,122 @@
       
       $id=$_GET['id'];
       // echo $id;
+
+      
 ?>
 
+<?php
+require('library/fpdf.php');
+include 'koneksi.php';
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+$pdf = new FPDF('P', 'mm', 'A4');
+$pdf->SetMargins(10, 35, 10); 
+$pdf->AddPage();
+$pdf->SetAutoPageBreak(false);
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body>
-  
-       <section class="content-header">
-      <div class="row">
-         <div class="col-12">
-          <div class="card">
-           <div class="card-header">
-            <h3 class="card-title">Data Barang</h3>
-          </div>
-            <div class="card-body">  
-              <table  class="table table-bordered table-striped">
-                <thead>
-                 <tr>
-                  <th>ID Barang</th>
-                  <th>Nama Barang</th>
-                  <th>Jumlah Barang</th>
-                  <th>Kelengkapan</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-              
-                <tbody>
-                    <?php 
-                        $query = mysqli_query($conn,"SELECT `tb_detil_mutasi_barang`.*, tb_barang.nama_barang, tb_barang.jml_barang
-                                                    FROM `tb_detil_mutasi_barang`,tb_barang
-                                                    WHERE `tb_detil_mutasi_barang`.id_barang=tb_barang.id_barang AND id_mutasi_jaga='$id'");
-                        while ($data = mysqli_fetch_assoc($query)) 
-                        {
-                        ?>
-                          <tr>
-                            <td><?php echo $data['id_barang']; ?></td>
-                            <td><?php echo $data['nama_barang']; ?></td>
-                            <td><?php echo $data['jml_barang']; ?></td>
-                            <td><?php echo $data['kelengkapan']; ?></td>
-                            <td><?php echo $data['keterangan']; ?></td>
-                          </tr>
-                        <?php               
-                        } 
-                        ?>
-                  </tbody>
+$pdf->Image('./dist/img/logo_korps.jpeg', 5, 5, 20); 
 
-              </table>
-            </div>
-          </div>
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(0, 1, 'LAPORAN MUTASI', 0, 1, 'C');
+$pdf->Ln(15);
 
-            <!-- /.card-body -->
-          </div>
-          </div>
+// Tabel Data Barang
+$pdf->SetFont('Times', 'B', 9);
+$pdf->Cell(10, 7, 'No', 1, 0, 'C');
+$pdf->Cell(20, 7, 'ID Barang', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Nama Barang', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Jumlah Barang', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Kelengkapan', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Keterangan', 1, 1, 'C');
 
-          <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-            <h3 class="card-title">Data Personil</h3>
-          </div> 
-            <div class="card-body"> 
-              <table  class="table table-bordered table-striped">
-                <thead>
-                 <tr>
-                  <th>ID Personil</th>
-                  <th>Nama Personil</th>
-                  <th>Pangkat</th>
-                  <th>No. NRP</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-              
-                <tbody>
-                    <?php 
-                          $query = mysqli_query($conn,"SELECT tb_detil_mutasi_personil.*, tb_personil.nama_personil, tb_personil.pangkat_personil, tb_personil.nrp_personil
-                                                        FROM tb_detil_mutasi_personil, tb_personil
-                                                        WHERE tb_detil_mutasi_personil.id_personil=tb_personil.id_personil
-                                                        AND id_mutasi_jaga='$id'");
-                          while ($data = mysqli_fetch_assoc($query)) 
-                          {
-                          ?>
-                            <tr>
-                              <td><?php echo $data['id_personil']; ?></td>
-                              <td><?php echo $data['nama_personil']; ?></td>
-                              <td><?php echo $data['pangkat_personil']; ?></td>
-                              <td><?php echo $data['nrp_personil']; ?></td>
-                              <td><?php echo $data['keterangan']; ?></td>
-                            </tr>
-                          <?php               
-                          } 
-                          ?>
-                  </tbody>
+$pdf->SetFont('Times', '', 10);
+$no = 1;
+$queryBarang = mysqli_query($conn, "SELECT tb_detil_mutasi_barang.*, tb_barang.nama_barang, tb_barang.jml_barang
+                                      FROM tb_detil_mutasi_barang, tb_barang
+                                      WHERE tb_detil_mutasi_barang.id_barang=tb_barang.id_barang
+                                      AND id_mutasi_jaga='$id'");
+while ($dataBarang = mysqli_fetch_assoc($queryBarang)) {
+    $pdf->Cell(10, 6, $no++, 1, 0, 'C');
+    $pdf->Cell(20, 6, $dataBarang['id_barang'], 1, 0);
+    $pdf->Cell(40, 6, $dataBarang['nama_barang'], 1, 0);
+    $pdf->Cell(40, 6, $dataBarang['jml_barang'], 1, 0, 'C');
+    $pdf->Cell(40, 6, $dataBarang['kelengkapan'], 1, 0);
+    $pdf->Cell(40, 6, $dataBarang['keterangan'], 1, 1);
+}
 
-              </table>
-            </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          </div>
+$pdf->Ln(10);
 
-          <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-          <h3 class="card-title">Data Mutasi</h3>
-        </div>
-            <div class="card-body">  
-              <table  class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Hari / Tanggal</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-              
-                <tbody>
-                    <?php 
-                    $query = mysqli_query($conn,"SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='$id'");
-                    while ($data = mysqli_fetch_assoc($query)) 
-                    {
-                    ?>
-                      <tr>
-                        <td><?php echo $data['id_list_mutasi']; ?></td>
-                        <td><?php echo $data['waktu_mutasi']; ?></td>
-                        <td><?php echo $data['keterangan_mutasi']; ?></td>
-                      </tr>
-                    <?php               
-                    } 
-                    ?>
-                  </tbody>
+// Tabel Data Personil
+$pdf->SetFont('Times', 'B', 9);
+$pdf->Cell(10, 7, 'No', 1, 0, 'C');
+$pdf->Cell(20, 7, 'ID Personil', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Nama Personil', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Pangkat', 1, 0, 'C');
+$pdf->Cell(40, 7, 'No. NRP', 1, 0, 'C');
+$pdf->Cell(40, 7, 'Keterangan', 1, 1, 'C');
 
-              </table>
-          </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          </div>
+$pdf->SetFont('Times', '', 10);
+$no = 1;
+$queryPersonil = mysqli_query($conn, "SELECT tb_detil_mutasi_personil.*, tb_personil.nama_personil, tb_personil.pangkat_personil, tb_personil.nrp_personil
+                                        FROM tb_detil_mutasi_personil, tb_personil
+                                        WHERE tb_detil_mutasi_personil.id_personil=tb_personil.id_personil
+                                        AND id_mutasi_jaga='$id'");
+while ($dataPersonil = mysqli_fetch_assoc($queryPersonil)) {
+    $pdf->Cell(10, 6, $no++, 1, 0, 'C');
+    $pdf->Cell(20, 6, $dataPersonil['id_personil'], 1, 0);
+    $pdf->Cell(40, 6, $dataPersonil['nama_personil'], 1, 0);
+    $pdf->Cell(40, 6, $dataPersonil['pangkat_personil'], 1, 0);
+    $pdf->Cell(40, 6, $dataPersonil['nrp_personil'], 1, 0);
+    $pdf->Cell(40, 6, $dataPersonil['keterangan'], 1, 1);
+}
 
-          <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-             <h3 class="card-title">Data Analisis & Evaluasi</h3>
-           </div>
-            <div class="card-body">  
-              <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th colspan="6" style="text-align: center;">Keterangan</th>
-                </tr>
-                </thead>
-                <tbody>
-          <?php 
-          $query = mysqli_query($conn,"SELECT * from tb_mutasi_jaga WHERE id_mutasi_jaga='$id'");
-          while ($data = mysqli_fetch_assoc($query)) 
-          {
-          ?>
-          <tr>
-          <td>
-              <?php 
-              $analisisLines = explode("\n", $data['analisis']);
-              $evaluasiLines = explode("\n", $data['evaluasi']);
+$pdf->Ln(10);
 
-              echo 'Analisis: ';
-              foreach ($analisisLines as $line) {
-                echo '<br>&emsp;&emsp;&emsp;&emsp;- ' . $line;
-              }
+// Tabel Data Mutasi
+$pdf->SetFont('Times', 'B', 9);
+$pdf->Cell(10, 7, 'No', 1, 0, 'C');
+$pdf->Cell(30, 7, 'Hari / Tanggal', 1, 0, 'C');
+$pdf->Cell(150, 7, 'Keterangan', 1, 1, 'C');
 
-              if (!empty($data['evaluasi'])) {
-                echo '<br><br>Evaluasi: ';
-                foreach ($evaluasiLines as $line) {
-                  echo '<br>&emsp;&emsp;&emsp;&emsp;- ' . $line;
-                }
-              }
-              ?>
-            </td>
-          </tr>
-          <?php               
-          } 
-          ?>
-        </tbody>
+$pdf->SetFont('Times', '', 10);
+$no = 1;
+$queryMutasi = mysqli_query($conn, "SELECT * FROM tb_list_mutasi WHERE id_mutasi_jaga='$id'");
+while ($dataMutasi = mysqli_fetch_assoc($queryMutasi)) {
+    $pdf->Cell(10, 6, $no++, 1, 0, 'C');
+    $pdf->Cell(30, 6, $dataMutasi['waktu_mutasi'], 1, 0);
+    $pdf->Cell(150, 6, $dataMutasi['keterangan_mutasi'], 1, 1);
+}
 
-              </table>
-            </div>
-          </div>
-          <!-- /.card -->
-        </div>
-          </div>
+$pdf->Ln(10);
 
-    </section>
+// Tabel Data Analisis & Evaluasi
+$pdf->SetFont('Times', 'B', 9);
+$pdf->Cell(190, 7, 'Keterangan', 1, 1, 'C');
 
+$pdf->SetFont('Times', '', 10);
+$queryAnalisis = mysqli_query($conn, "SELECT * from tb_mutasi_jaga WHERE id_mutasi_jaga='$id'");
+while ($dataAnalisis = mysqli_fetch_assoc($queryAnalisis)) {
+    $analisisLines = explode("\n", $dataAnalisis['analisis']);
+    $evaluasiLines = explode("\n", $dataAnalisis['evaluasi']);
 
+    // Analisis
+    $pdf->SetFont('Times', 'B', 11);
+    $pdf->Cell(190, 6, 'Analisis:', 1, 1);
+    $pdf->SetFont('Times', '', 11);
+    foreach ($analisisLines as $line) {
+        $pdf->Cell(190, 6, $line, 1, 1);
+    }
 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="plugins/datatables/jquery.dataTables.js"></script>
-<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
-</script>
-</body>
-</html>
+    // Evaluasi
+    if (!empty($dataAnalisis['evaluasi'])) {
+        $pdf->SetFont('Times', 'B', 11);
+        $pdf->Cell(190, 6, 'Evaluasi:', 1, 1);
+        $pdf->SetFont('Times', '', 11);
+        foreach ($evaluasiLines as $line) {
+            $pdf->Cell(190, 6, $line, 1, 1);
+        }
+    }
+} 
+
+$pdf->Output();
+?>
