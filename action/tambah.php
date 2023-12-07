@@ -157,6 +157,29 @@ function createAktivitasMutasi($conn) {
     }
 }
 
+// Tambah aktivitas PJ
+function createPJ($conn) {
+  if (isset($_POST['submit'])) {
+      $namapj = $_POST['namapj'];
+      $pangkatpj = $_POST['pangkatpj'];
+      $nrppj = $_POST['nrppj'];
+
+      mysqli_query($conn, "UPDATE setting SET status_pj='0'");
+
+      $queryPJ = "INSERT INTO setting (perwira_penanggung_jawab, pangkat_pj, nrp_pj, status_pj) 
+                        VALUES ('$namapj', '$pangkatpj', '$nrppj','1')";
+      
+      $result = mysqli_query($conn, $queryPJ);
+
+      if ($result) {
+          $_SESSION['success'] = "Data aktivitas mutasi berhasil ditambahkan.";
+          header('Location: ../pj.php');
+      } else {
+          $_SESSION['error'] = "Data aktivitas mutasi gagal ditambahkan.";
+          echo "Error: " . mysqli_error($conn);
+      }
+  }
+}
 
 if ($_POST['action'] == 'createPersonil') {
   createPersonil($conn);
@@ -172,6 +195,8 @@ if ($_POST['action'] == 'createPersonil') {
   createMutasiJagaPersonil($conn);
 } elseif ($_POST['action'] == 'createAktivitasMutasi') {
   createAktivitasMutasi($conn);
+} elseif ($_POST['action'] == 'createPJ') {
+  createPJ($conn);
 }
 
  ?>

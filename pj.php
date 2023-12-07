@@ -1,5 +1,5 @@
 <?php
-    session_start();
+     session_start();
     include "koneksi.php";
     
       if($_SESSION['status']!="login"){
@@ -7,8 +7,8 @@
       }
 
       $level = $_SESSION['level'];
-?>
 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -53,7 +53,7 @@
         <img src="dist/img/korps.jpeg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><strong>SICATAT</strong> | MUTASI</a>
+        <a href="#" class="d-block"><strong>SICATAT</strong> | MUTASI</a>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link active">
+            <a href="dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -73,8 +73,8 @@
           <?php
           if ($level == "admin") {
             ?>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Data Master
@@ -101,9 +101,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pj.php" class="nav-link">
+                <a href="pj.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>PJ</p>
+                  <p>Penanggung Jawab</p>
                 </a>
               </li>
             </ul>
@@ -165,12 +165,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Dashboard</h1>
-            <!-- <h5 class="mt-3">hello <?php echo $level;?></h5> -->
+            <h1>Penanggung Jawab</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item"><a href="#">Data Master</a></li>
+              <li class="breadcrumb-item active">Penanggung Jawab</li>
             </ol>
           </div>
         </div>
@@ -179,7 +179,128 @@
 
     <!-- Main content -->
     <section class="content">
-<!-- DASHBOARD DISINI -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Kelola Data Penanggung Jawab</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="button-table">
+                <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Tambah PJ</a>
+              </div>
+            </div>
+            <div class="card-body">  
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nama PJ</th>
+                  <th>Pangkat</th>
+                  <th>NRP</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+          <?php 
+          $query = mysqli_query($conn,"SELECT * FROM setting");
+          while ($data = mysqli_fetch_assoc($query)) 
+          {
+          ?>
+            <tr>
+              <td><?php echo $data['id_setting']; ?></td>
+              <td><?php echo $data['perwira_penanggung_jawab']; ?></td>
+              <td><?php echo $data['pangkat_pj']; ?></td>
+              <td><?php echo $data['nrp_pj']; ?></td>
+              
+                <?php 
+                  if ($data['status_pj']==1){
+                    echo "<td>Aktif</td>";
+                  }else{
+                    echo "<td>Tidak Aktif</td>";
+                  }
+                ?>
+              
+              <td>
+               <a href="#" type="button" class="btn btn-md btn-warning" data-toggle="modal" data-target="#myModal<?php echo $data['id_setting']; ?>">Edit</a>
+
+              <!-- <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>Delete">Delete</a> -->
+              </td>
+            </tr>
+            <!-- Modal Edit User-->
+            <div class="modal fade" id="myModal<?php echo $data['id_setting']; ?>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Update Data Penanggung Jawab</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" action="action/ubah.php" method="post">
+
+                        <?php
+                          $id = $data['id_setting']; 
+                          $query_edit = mysqli_query($conn,"SELECT * FROM setting WHERE id_setting='$id'");
+                          while ($row = mysqli_fetch_array($query_edit)) {  
+                        ?>
+
+                        <input type="hidden" name="id_pj" value="<?php echo $row['id_setting']; ?>">
+                        <input type="hidden" name="action" value="updatePJ">
+
+                        <div class="form-group">
+                          <label>Nama Penanggung Jawab</label>
+                          <input type="text" name="namapj" class="form-control" value="<?php echo $row['perwira_penanggung_jawab']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Pangkat</label>
+                          <input type="text" name="pangkatpj" class="form-control" value="<?php echo $row['pangkat_pj']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>NRP</label>
+                          <input type="text" name="nrppj" class="form-control" value="<?php echo $row['nrp_pj']; ?>" disabled>      
+                        </div>
+
+                        <div class="form-group">
+                          <label>Status</label>
+                              <select name="statuspj" class="form-control">
+                                      <option value="1">Aktif</option>
+                                      <option value="0">Tidak Aktif</option>      
+                              </select>    
+                        </div>
+                        
+                        <div class="modal-footer">  
+                          <button type="submit" name="submit" class="btn btn-success">Simpan Perubahan Data</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+
+                        <?php 
+                        }
+                        ?>        
+                      </form>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          <?php               
+          } 
+          ?>
+        </tbody>
+
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
@@ -189,37 +310,20 @@
               
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Tambah data user</h4>
+                    <h4 class="modal-title">Tambah data PJ</h4>
                   </div>
                   <div class="modal-body">
                     <form role="form" action="action/tambah.php" method="post">
-                    <input type="hidden" name="action" value="createUser">
-
-                        <div class="form-group">   
-                          <label>Personil</label>
-                          <select name="personil" id="personil" class="form-control">
-                              <option disabled selected> Pilih Personil </option>
-                              <?php 
-                                $sql=mysqli_query($conn,"SELECT * FROM tb_personil where id_personil NOT IN (SELECT id_personil FROM tb_user WHERE status_user='1') and status_personil <> '0'");
-                                while ($data=mysqli_fetch_array($sql)) {
-                              ?>
-                                <option value="<?=$data['id_personil']?>"><?=$data['nama_personil']?></option> 
-                              <?php
-                                }
-                              ?>
-                          </select>
+                    <input type="hidden" name="action" value="createPJ">
                           
-                          <label>Username</label>
-                          <input type="text" name="username" class="form-control" value="">  
+                          <label>Nama PJ</label>
+                          <input type="text" name="namapj" class="form-control" value="">  
                           
-                          <label>Password</label>
-                          <input type="password" name="password" class="form-control" value="">
+                          <label>Pangkat</label>
+                          <input type="text" name="pangkatpj" class="form-control" value="">
                           
-                          <label>Role</label>
-                          <select name="level" id="level"  class="form-control">
-                            <option value="admin">Admin</option>
-                            <option value="petugas">Petugas</option>
-                          </select>        
+                          <label>NRP</label>
+                          <input type="text" name="nrppj" class="form-control" value="">       
                         </div>
                         
                         <div class="modal-footer">  
