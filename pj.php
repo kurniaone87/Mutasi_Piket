@@ -292,7 +292,7 @@
           ?>
         </tbody>
 
-              </table>
+        </table>
             </div>
             <!-- /.card-body -->
           </div>
@@ -303,7 +303,6 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
-  </div>
           <!-- Modal Tambah -->
           <div class="modal fade" id="myModal" role="dialog">
               <div class="modal-dialog">
