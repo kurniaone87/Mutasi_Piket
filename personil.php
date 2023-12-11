@@ -215,7 +215,15 @@
           <td><?php echo $data['nama_personil']; ?></td>
           <td><?php echo $data['pangkat_personil']; ?></td>
           <td><?php echo $data['nrp_personil']; ?></td>
-          <td><?php echo $data['status_personil']; ?></td>
+          
+          <?php 
+                  if ($data['status_personil']==1){
+                    echo "<td>Aktif</td>";
+                  }else{
+                    echo "<td>Tidak Aktif</td>";
+                  }
+                ?>
+
           <td>
           <a href="#" type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal<?php echo $data['id_personil']; ?>">Edit</a>
            <!-- <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_personil']; ?>Delete">Delete</a> -->
@@ -259,9 +267,17 @@
                           <input type="text" name="nrp_personil" class="form-control" value="<?php echo $row['nrp_personil']; ?>">      
                         </div>
 
-                          <div class="form-group">
-                          <label>Status Personil</label>
-                          <input type="text" name="status_personil" class="form-control" value="<?php echo $row['status_personil']; ?>">      
+                        <div class="form-group">
+                          <label>Status</label>
+                          <?php 
+                            if ($row['status_personil']=='1'){
+                              echo "<select name=\"status\" class=\"form-control\">
+                                      <option value=\"1\">Aktif</option>
+                                      <option value=\"0\">Tidak Aktif</option>      
+                              </select>";
+                            }else{
+                              echo "<input type=\"text\" name=\"status\" class=\"form-control\" value=\"Tidak Aktif\" disabled>";
+                            } ?>     
                         </div>
 
                         
