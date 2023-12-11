@@ -224,7 +224,7 @@
                 ?>
               
               <td>
-               <a href="#" type="button" class="btn btn-md btn-warning" data-toggle="modal" data-target="#myModal<?php echo $data['id_setting']; ?>">Edit</a>
+               <a href="#" type="button" class="btn btn-md <?php echo ($data['status_pj'] == '0') ? 'btn-warning disabled' : 'btn-success'; ?>"  data-toggle="modal" data-target="#myModal<?php echo $data['id_setting']; ?>">Edit</a>
 
               <!-- <a href="#" type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#myModal<?php echo $data['id_user']; ?>Delete">Delete</a> -->
               </td>

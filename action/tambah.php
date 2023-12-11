@@ -25,26 +25,6 @@ function createUser($conn) {
 }
 }
 
-// settings
-function createPJ($conn) {
-  if (isset($_POST['submit'])) {
-    $username = $_POST['nama_pj'];
-    $pangkat = $_POST['pangkat'];
-    $no_nrp = $_POST['no_nrp'];
-
-    $queryPJ = "INSERT INTO setting (perwira_penanggung_jawab, pangkat_pj, nrp_pj, status_pj) VALUES ('$username','$pangkat','$no_nrp', '1')";
-    $result = mysqli_query($conn, $queryPJ);
-
-    if ($result) {
-      $_SESSION['success'] = "Data user berhasil ditambahkan.";
-      header('Location: ../setting.php');
-    } else {
-      $_SESSION['error'] = "Data user gagal ditambahkan.";
-    }
-  }
-}
-}
- 
 // personil
 function createPersonil($conn) {
   if (isset($_POST['submit'])) {

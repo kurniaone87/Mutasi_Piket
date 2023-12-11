@@ -422,8 +422,6 @@ $idmutasi=$_GET['id'];
           ?>
             <tr>
               <td><?php echo $data['waktu_mutasi']; ?></td>
-                  <th>Status</th>
-                  <th>Status</th>
               <td><?php echo $data['keterangan_mutasi']; ?></td>
             </tr>
           <?php               
