@@ -7,6 +7,8 @@
       }
 
       $level = $_SESSION['level'];
+
+
 ?>
 
 
@@ -178,8 +180,157 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
-<!-- DASHBOARD DISINI -->
+     <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-info"><i class="far fa-user"></i></span>
+
+              <?php
+                $query = "SELECT COUNT(id_user) as total_user FROM tb_user WHERE status_user='1'";
+                $result = mysqli_query($conn, $query);
+
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+
+                    $totalUser = $row['total_user'];
+                } else {
+                    $totalUser = 0;
+                    echo "Error: " . mysqli_error($conn);
+                }
+              ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Data User</span>
+                <span class="info-box-number"><?php echo $totalUser; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-success"><i class="fa fa-user-friends"></i></span>
+
+              <?php
+                $query = "SELECT COUNT(id_personil) as total_personil FROM tb_personil WHERE status_personil='1'";
+                $result = mysqli_query($conn, $query);
+
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+
+                    $totalPersonil = $row['total_personil'];
+                } else {
+                    $totalPersonil = 0;
+                    echo "Error: " . mysqli_error($conn);
+                }
+              ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Data Personil</span>
+                <span class="info-box-number"><?php echo $totalPersonil; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="fa fa-boxes"></i></span>
+
+               <?php
+                $query = "SELECT COUNT(id_barang) as total_barang FROM tb_barang WHERE status_brg='1'";
+                $result = mysqli_query($conn, $query);
+
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+
+                    $totalBarang = $row['total_barang'];
+                } else {
+                    $totalBarang = 0;
+                    echo "Error: " . mysqli_error($conn);
+                }
+              ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Data Barang</span>
+                <span class="info-box-number"><?php echo $totalBarang; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          
+
+          <div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Data Mutasi Piket Jaga</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <?php
+            $query = mysqli_query($conn, "SELECT * from tb_mutasi_jaga WHERE status_mutasi='0'");
+            $data_exists = false;
+
+            while ($data = mysqli_fetch_assoc($query)) {
+                $data_exists = true;
+            ?>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tanggal</th>
+                            <th>Analisis</th>
+                            <th>Evaluasi</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $data['id_mutasi_jaga']; ?></td>
+                            <td><?php echo $data['tgl_mutasi']; ?></td>
+                            <td><?php echo $data['analisis']; ?></td>
+                            <td><?php echo $data['evaluasi']; ?></td>
+
+                            <?php
+                            if ($data['status_mutasi'] == 1) {
+                                echo "<td>Selesai</td>";
+                            } else {
+                                echo "<td>Pending</td>";
+                            }
+                            ?>
+
+                            <td>
+                                <a href="detil_mutasijaga.php?id=<?php echo $data['id_mutasi_jaga']; ?>" type="button" class="btn btn-md btn-warning">Detil</a>
+                            </td>
+                        </tr>
+
+                    <?php
+                }
+                    ?>
+                    </tbody>
+                </table>
+
+                <?php
+                if (!$data_exists) {
+                    echo "<p style='text-align: center;'>Tidak Ada Data Mutasi</p>";
+                }
+                ?>
+        </div>
+    </div>
+</div>
+
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
