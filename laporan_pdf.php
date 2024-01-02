@@ -18,6 +18,14 @@
 require('library/fpdf.php');
 include 'koneksi.php';
 
+if($_SESSION['status']!="login"){
+        header("location: index.php");
+      }
+
+      $level = $_SESSION['level'];
+      
+      $id=$_GET['id'];
+
 $pdf = new FPDF('P', 'mm', 'A4');
 $pdf->SetMargins(10, 35, 10); 
 $pdf->AddPage();
@@ -124,39 +132,39 @@ while ($dataAnalisis = mysqli_fetch_assoc($queryAnalisis)) {
         foreach ($evaluasiLines as $line) {
             $pdf->Cell(190, 6, $line, 1, 1);
         }
-    }
+    }   
 
-    // // Kolom Paraf
-    // $pdf->Cell(10); // Spasi
-    // $pdf->Cell(65, 40, 'Yang Menyerahkan', 0, 0);
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(65, 40, 'Yang Menerima', 0, 0);
-    // $pdf->Cell(60); // Spasi
-    // // $pdf->Cell(55, 40, 'Perwira Penanggung Jawab', 0, 1);
+$pdf->SetY(-70);
+$pdf->SetFont('Times', 'B', 11);
+$pdf->Cell(95, 10, 'Yang Menyerahkan', 0, 0, 'C');
+$pdf->Cell(95, 10, 'Yang Menerima', 0, 1, 'C');
 
-    // $pdf->Cell(10); // Spasi
-    // $pdf->Cell(65, 10, '___________________', 0, 0); // Garis
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(55, 1, '___________________', 0, 1); // Garis
+$pdf->SetFont('Times', '', 11);
+$pdf->Cell(95, 10, '___________________', 0, 0, 'C');
+$pdf->Cell(95, 10, '___________________', 0, 1, 'C');
 
-    // $pdf->Cell(20, 20, 'No. NRP', 0, 0); // No. NRP
-    // $pdf->Cell(20, 0, 'Nama User', 0, 0); // Nama User
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(65, 5, 'Nama User', 0, 0); // Nama User
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(55, 5, 'Nama Setting', 0, 1); // Nama Setting
+$queryUser = mysqli_query($conn, "SELECT * FROM tb_personil WHERE id_personil IN (SELECT id_personil FROM tb_user WHERE username='username')");
+$dataUser = mysqli_fetch_assoc($queryUser);
 
-    // $pdf->Cell(10); // Spasi
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(65, 5, '___________________', 0, 0); // Garis
-    // $pdf->Cell(60); // Spasi
+$_SESSION['nrp_personil'] = $dataUser['nrp_personil'];
+$_SESSION['nama_personil'] = $dataUser['nama_personil'];
+$_SESSION['pangkat_personil'] = $dataUser['pangkat_personil'];
+$pdf->Cell(95, 5, $_SESSION['nama_personil'], 0, 0, 'C');
+$pdf->SetX(10);
+$pdf->Cell(95, 15, $_SESSION['pangkat_personil'] . " NRP. " . $_SESSION['nrp_personil'], 0, 0, 'C');
 
-    // $pdf->Cell(10); // Spasi
-    // $pdf->Cell(65, 5, 'No. NRP', 0, 0); // No. NRP
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(65, 5, 'No. NRP', 0, 0); // No. NRP
-    // $pdf->Cell(60); // Spasi
-    // $pdf->Cell(55, 5, 'No. NRP Setting', 0, 1); // No. NRP Setting
+
+$pdf->Ln(10);
+$query = mysqli_query($conn, "SELECT * FROM setting WHERE status_pj = '1'");
+
+$pdf->SetX(50);
+$pdf->Cell(95, 10, 'Penanggung Jawab', 0, 1, 'C');
+$pdf->Cell(180, 10, '___________________', 0, 0, 'C');
+$pdf->Cell(180, 10, '___________________', 0, 1, 'C');
+while ($data = mysqli_fetch_assoc($query)) {
+    $pdf->Cell(180, 5, $data['perwira_penanggung_jawab'], 0, 1, 'C');
+    $pdf->Cell(180, 5, $data['pangkat_pj'] . ' NRP. ' . $data['nrp_pj'], 0, 1, 'C');
+}
 } 
 
 $pdf->Output();
