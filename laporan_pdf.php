@@ -166,6 +166,6 @@ while ($data = mysqli_fetch_assoc($query)) {
     $pdf->Cell(180, 5, $data['pangkat_pj'] . ' NRP. ' . $data['nrp_pj'], 0, 1, 'C');
 }
 } 
-
+ 
 $pdf->Output();
 ?>
